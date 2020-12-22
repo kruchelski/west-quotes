@@ -1,0 +1,23 @@
+[/] + - GET: Busca uma citação e verifica quantas vezes ela foi curtida e busca uma imagem
+        retorna quote, quntidade de curtidas e imagem
+
+[/quotes] + - POST: Marca uma curtida em uma citação
+          |   recebe: uuid da quote. Retorna 204 se tudo ok
+          |
+          + - GET: Busca as citações curtidas de um usuário
+          |   recebe como param um uuid do usuário. retorna array de citacoes
+          |
+          + - DELETE: Remove uma citação da lista de curtidas
+              recebe: uuid da quote. Retorna 204 se tudo ok
+
+[/login] + - POST: Tenta relizar um login
+         |   recebe username e password. Retorna um jwt e status 200
+         |
+         + - GET: Recuperar email e senha do usuário
+         |   recebe como params o email do usuário e retorna um 200
+         |
+         + - [/twitter] + - GET: Faz login pelo twitter
+                            Redireciona para o login to twitter
+
+[/register] + - POST: Cria um usuário
+                Recebe um email, username e senha. Faz o login e retorna um jwt e sstatus 200

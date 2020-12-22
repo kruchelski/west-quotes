@@ -1,0 +1,5 @@
+# Node needed modules for the application
+/node_modules
+
+# Environment configurations
+.env
