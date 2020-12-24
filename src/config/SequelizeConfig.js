@@ -1,16 +1,50 @@
-// Entities
-const { Sequelize } = require('sequelize');
+// This file is generated with the sequelize init command but then it was modified to be a JS file
 require('dotenv').config();
 
-// Sequelize configs
+// Entities
+const { Sequelize } = require('sequelize');
+
+// Main configs
+const env = process.env.NODE_ENV || 'development';
+
+development = {
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  host: process.env.DB_HOST,
+  dialect: process.env.DB_DIALECT || 'postgres'
+};
+
+test = {
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  host: process.env.DB_HOST,
+  dialect: process.env.DB_DIALECT || 'postgres'
+};
+
+production = {
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  host: process.env.DB_HOST,
+  dialect: process.env.DB_DIALECT || 'postgres'
+}
+
+this.development = development;
+this.test = test;
+this.production = production;
+
+
+// Sequelize instance
 const sequelize = new Sequelize(
-    process.env.POSTGRES_DB,
-    process.env.POSTGRES_USER,
-    process.env.POSTGRES_PASSWORD,
-    {
-        host: process.env.POSTGRES_HOST,
-        dialect: 'postgres'
-    }
+  this[env].database,
+  this[env].username,
+  this[env].password,
+  {
+    host: this[env].host,
+    dialect: this[env].dialect
+  }
 )
 
-module.exports = sequelize;
+module.exports = { development, test, production, sequelize }
