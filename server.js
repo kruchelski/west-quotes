@@ -1,6 +1,6 @@
-const { app, PORT } = require('./src/configs/MainConfig');
+const { app, PORT } = require('./src/config/MainConfig');
 const homeRouter = require('./src/routes/Home');
-const loginRouter = require('./src/routes/Login');
+const userRouter = require('./src/routes/User');
 const quotesRouter = require('./src/routes/Quotes');
 const registerRouter = require('./src/routes/Register');
 
@@ -9,6 +9,6 @@ app.listen(PORT, () => {
 });
 
 app.use('/', homeRouter);
-app.use('/login', loginRouter);
+app.use('/user', userRouter);
 app.use('/quotes', quotesRouter);
 app.use('/register', registerRouter);

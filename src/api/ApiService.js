@@ -1,4 +1,4 @@
-const { flickr, kanye } = require('../configs/AxiosConfig');
+const { kanye, unsplash } = require('../config/AxiosConfig');
 
 /**
  * Get a quote from kanye REST API
@@ -19,54 +19,46 @@ const getQuote = async () => {
 }
 
 /**
- * Search for photos in Flickr according to some term
- * @param {*} term Term for search
+ * Search for images in Unsplash according to some query
+ * @param {*} query Query params for the image search
  */
-const searchPhotos = async (term) => {
+const getImage = async (query) => {
+
+    console.log('Query: ', query);
     // Make request
-    const response = await flickr.get('/', { 
+    const response = await unsplash.get('search/photos', {
         params: {
-            method: 'flickr.photos.search',
-            text: term,
-            per_page: 300,
+            query
         }
     })
 
-    // Handle error
-    if (response && 
-        response.data.stat && 
-        response.data.stat !== 'ok'
+    // Handle errors
+    if (response &&
+        response.data &&
+        response.data.errors &&
+        response.data.errors.length &&
+        response.data.errors[0]
     ) {
-        throw new Error('API-500-Unexpected error during request for photos')
+        if (response.errors[0].includes('OAuth error')) {
+            throw new Error('API-403-Error authenticating to Unsplash')
+        } else {
+            throw new Error('API-500-Unexpected error during request for images')
+        }
     }
 
-    // Handle photo data
-    return handlePhotos(response.data);
-}
-
-/**
- * Handles the photo data to return a photo URL
- * @param {*} data Data from search photos request
- */
-const handlePhotos = (data) => {
-
-    // If there's no photos, return null
-    if (!data || 
-        !data.photos || 
-        !data.photos.photo || 
-        !data.photos.photo.length
-    ) {
-        return null;
+    // Handle images
+    if (!response ||
+        !response.data ||
+        !response.data.results ||
+        !response.data.results.length) {
+            return null;
     }
 
-    // Generate random number to select on data from the array
-    const index = Math.floor(Math.random() * data.photos.photo.length);
+    // Gera um índice aleatório
+    const i = Math.floor(Math.random() * response.data.results.length);
 
-    // Retrieve info to make the photo url
-    const {secret, id, server, farm} = data.photos.photo[index];
-
-    // Return the photo URL
-    return `https://farm${farm}.staticflickr.com/${server}/${id}_${secret}.jpg`;
+    // Retorna a url da imagem
+    return response.data.results[i].urls.regular;
 }
 
-module.exports = { searchPhotos, getQuote };
+module.exports = { getQuote, getImage };

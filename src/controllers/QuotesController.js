@@ -2,21 +2,28 @@
 const api = require('../api/ApiService');
 const apiHelper = require('../helpers/ApiHelper');
 
+/**
+ * Generates a quote
+ * @param {*} req Request object
+ * @param {*} res Response object
+ */
 const generateQuote = async (req, res) => {
     try {
-        // Promises array
-        let promises = [];
+        // Request a quote
+        const quote = await api.getQuote();
 
-        // Add requests to promises array
-        promises.push(api.getQuote());
-        promises.push(api.searchPhotos('kanye west'));
+        // Split the quote 
+        const splitedQuoted = quote.split(' ');
 
-        // Await promises to complete
-        const response = await Promise.all(promises);
-        const [quote, photo] = response;
+        // Generates random indexes based on the quote length
+        const index1 = Math.floor(Math.random() * splitedQuoted.length);
+        const index2 = Math.floor(Math.random() * splitedQuoted.length);
+
+        // Request an image based on two words from the quote
+        const image = await api.getImage(`${splitedQuoted[index1]} ${splitedQuoted[index2]}`);
 
         // Return object
-        res.json({quote, photo})
+        res.json({quote, image})
     } catch (err) {
         const parsedError = apiHelper.errorHandler(err);
         res.status(parsedError.status).send(parsedError.msg);
