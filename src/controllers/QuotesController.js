@@ -1,6 +1,6 @@
 // Entities
 const api = require('../api/ApiService');
-const apiHelper = require('../helpers/ApiHelper');
+const ErrorHelper = require('../helpers/ErrorHelper');
 
 /**
  * Generates a quote
@@ -25,7 +25,7 @@ const generateQuote = async (req, res) => {
         // Return object
         res.json({quote, image})
     } catch (err) {
-        const parsedError = apiHelper.errorHandler(err);
+        const parsedError = ErrorHelper.apiErrorHandler(err);
         res.status(parsedError.status).send(parsedError.msg);
     }
 }

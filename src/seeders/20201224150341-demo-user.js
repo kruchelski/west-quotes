@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * This seed will insert a new user in the database and generates the UUID
+ */
+
 // Entities
 const { User } = require('../models');
 

@@ -18,6 +18,11 @@ module.exports = (sequelize, DataTypes) => {
         through: 'UserQuote',
         foreignKey: 'uuid_user'
       })
+      User.hasOne(models.RefreshToken, {
+        foreignKey: {
+          name: 'uuid_user'
+        }
+      });
     }
   };
 

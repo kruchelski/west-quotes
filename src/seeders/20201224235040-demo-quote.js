@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * This seed will insert a quote in the database and genereates it's UUID
+ */
+
 // Entities
 const { Quote } = require('../models');
 
