@@ -1,15 +1,15 @@
 'use strict';
 
-// Entities
-const { User } = require('../models');
+//Entities
+const { UserQuote } = require('../models');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return await User.create({
-      username: 'testUsername',
-      email: 'testUsername@test.com',
-      password: '123456'
+    return await UserQuote.create({
+      uuid_user: 'ce1e1d65-42bd-4d07-88d6-f3cdf2e854fc',
+      uuid_quote: 'ae4eda72-eca8-4c13-8804-fe940e60e60b'
     })
+
   },
 
   down: async (queryInterface, Sequelize) => {
