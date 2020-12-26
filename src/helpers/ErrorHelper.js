@@ -1,14 +1,6 @@
 // Entities
 const SequelizeConstants = require('../constants/SequelizeConstants');
 
-// Global variable to associate an error handler to an error name
-var errorRegister = {
-    ApiError: apiErrorHandler,
-    AuthError: authErrorHandler,
-    SequelizeUniqueConstraintError: sequelizeUniqueErrorHandler,
-    TokenError: tokenErrorHandler
-}
-
 const errorDelegator = (err) => {
     // Set the genericErrorHandler as default
     let errorHandler = genericErrorHandler;
@@ -35,9 +27,13 @@ const errorDelegator = (err) => {
  * @param {*} err Error object
  */
 const apiErrorHandler = (err) => {
-    const { api, status, message } = err;
+    const defaultStatus = 500;
+    const defaultMsg = 'A really terrible error ocurred during an API request :(';
+
+    const { status, message, api } = err;
     let msg = `[${api || 'API'}] Error: ${message}`;
-    return { status, msg};
+
+    return { status: status || defaultStatus, message: message || defaultMsg };
 }
 
 /**
@@ -45,7 +41,22 @@ const apiErrorHandler = (err) => {
  * @param {*} err Error object
  */
 const authErrorHandler = (err) => {
+    const defaultStatus = 500;
+    const defaultMsg = 'A really terrible error ocurred during the authentication process :(';
 
+    const { status, message, entities } = err;
+    let msg = message;
+    if (entities && entities.lenght) {
+        msg += ' [';
+        entities.forEach((entity, i) => {
+            msg += entity;
+            if (i < (entities.lenght - 1)) {
+                msg += ', ';
+            }
+        })
+        msg += ']'
+    }
+    return { status: status || defaultStatus, message: message || defaultMsg };
 }
 
 /**
@@ -53,7 +64,17 @@ const authErrorHandler = (err) => {
  * @param {*} err Error Object
  */
 const sequelizeUniqueErrorHandler = (err) => {
+    const defaultStatus = 500;
+    const defaultMsg = 'A really terrible error ocurred a database validation of unique keys :(';
 
+    let element = 'element';
+    if (err.errors && err.errors.length) {
+        element = err.errors[0].path;
+    }
+    let { status, message } = SequelizeConstants.ERROR.NAME[err.name];
+    msg = msg.replace('element', element);
+
+    return { status: status || defaultStatus, message: message || defaultMsg };
 }
 
 /**
@@ -61,7 +82,12 @@ const sequelizeUniqueErrorHandler = (err) => {
  * @param {*} err Error object
  */
 const tokenErrorHandler = (err) => {
+    const defaultStatus = 500;
+    const defaultMsg = 'A really terrible error ocurred during a Token operation :(';
 
+    const { status, message } = err;
+
+    return { status: status || defaultStatus, message: message || defaultMsg };
 }
 
 /**
@@ -69,42 +95,14 @@ const tokenErrorHandler = (err) => {
 * @param {*} err Error object
 */
 const sequelizeGenericErrorHandler = (err) => {
-
-    // Default error response
-    let errorResponse = {
-        status: 500,
-        msg: 'A really terrible and unexpected error happend accessing the database :('
+    const defaultStatus = 500;
+    const defaultMsg = 'A really terrible error ocurred during a database access :(';
+    let message;
+    if (err.errors && err.errors.length) {
+        message = err.errors[0].message;
     }
 
-    // Check if it's Sequelize Exception
-    if (err && err.name && err.name !== 'Error') {
-        switch (err.name) {
-            case 'SequelizeUniqueConstraintError':
-                let element = 'element';
-                if (err.errors && err.errors.length) {
-                    element = err.errors[0].path;
-                }
-                const { status, msg } = SequelizeConstants.ERROR.NAME[err.name];
-                errorResponse.status = status;
-                errorResponse.msg = msg.replace('element', element);
-                break;
-            default:
-                if (err.errors && err.errors.length) {
-                    errorResponse.status = 500;
-                    errorResponse.msg = err.errors[0].message;
-                }
-        }
-    } else if (err && err.message && typeof err.message === 'string') {
-        if (err.message.includes('SEQUELIZE')) {
-            const splitedError = err.message.split('-');
-            errorResponse.status = parseInt(splitedError[1]);
-            errorResponse.msg = splitedError[2];
-        } else {
-            errorResponse.status = 500;
-            errorResponse.msg = err.message
-        }
-    }
-    return errorResponse;
+    return { status: defaultStatus, message: message || defaultMsg }
 }
 
 /**
@@ -112,42 +110,38 @@ const sequelizeGenericErrorHandler = (err) => {
  * @param {*} err Error Object
  */
 const genericErrorHandler = (err) => {
-    if (typeof err === 'string') {
-        return {
-            status: 500,
-            msg: err
-        }
-    }
-    if (err &&
-        err.message &&
-        err.message.includes('API')
+    const defaultStatus = 500;
+    const defaultMsg = 'A really terrible error ocurred in the server :(';
+    let message;
+    if (
+        typeof err === 'string'
     ) {
-        const error = err.message.split('-');
-        return {
-            status: parseInt(error[1]),
-            msg: error[2]
-        }
-    }
-    if (err &&
+        message = err;
+    } else if (
+        err &&
         err.message
     ) {
-        return {
-            status: 500,
-            msg: err.message
-        }
-    }
-    if (err &&
+        message = err.message;
+    } else if (err &&
+        err.error &&
+        typeof err.error === 'string'
+    ) {
+        message = err.error;
+    } else if (
+        err &&
         err.msg
     ) {
-        return {
-            status: 500,
-            msg: error.msg
-        }
+        message = err.msg;
     }
-    return {
-        status: 500,
-        msg: 'A really terrible and unexpected error happend accessing the quotes/images :('
-    }
+    return { status: defaultStatus, message: message || defaultMsg };
+}
+
+// Global variable to associate an error handler to an error name
+var errorRegister = {
+    ApiError: apiErrorHandler,
+    AuthError: authErrorHandler,
+    SequelizeUniqueConstraintError: sequelizeUniqueErrorHandler,
+    TokenError: tokenErrorHandler
 }
 
 module.exports = { errorDelegator }

@@ -5,6 +5,8 @@ const router = express.Router();
 // Entities
 const { User, Quote, RefreshToken } = require('../models');
 const AuthController = require('../controllers/AuthController');
+const TokenController = require('../controllers/TokenController');
+
 
 
 router.get('/', async (req, res) => {
@@ -36,5 +38,10 @@ router.post('/register', async (req, res) => AuthController.insertUser(req, res)
  * Login an user into the system
  */
 router.post('/login', async (req, res) => AuthController.authenticateUser(req, res));
+
+/**
+ * Request new access token
+ */
+router.post('/token', async (req, res) => TokenController.tokenRenewal(req, res));
 
 module.exports = router;

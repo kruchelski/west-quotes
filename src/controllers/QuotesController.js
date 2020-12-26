@@ -26,7 +26,7 @@ const generateQuote = async (req, res) => {
         res.json({quote, image})
     } catch (err) {
         const parsedError = ErrorHelper.apiErrorHandler(err);
-        res.status(parsedError.status).send(parsedError.msg);
+        res.status(parsedError.status).send(parsedError.message);
     }
 }
 

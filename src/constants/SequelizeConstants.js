@@ -2,7 +2,7 @@ const ERROR = {
     NAME: {
         SequelizeUniqueConstraintError: {
             status: 409,
-            msg: 'Error - The element already exists'
+            message: 'Error - The element already exists'
         }
     }
 }

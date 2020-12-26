@@ -1,4 +1,6 @@
+// Entities
 const { kanye, unsplash } = require('../config/AxiosConfig');
+const ApiError = require('../errors/ApiError');
 
 /**
  * Get a quote from kanye REST API
@@ -12,7 +14,7 @@ const getQuote = async () => {
         !response.data || 
         !response.data.quote
     ) {
-        throw new Error('API-404-Quote not found');
+        throw new ApiError('Quote not found', 404, 'Kanye REST');
     }
 
     // Return quote
@@ -41,9 +43,9 @@ const getImage = async (query) => {
         response.data.errors[0]
     ) {
         if (response.errors[0].includes('OAuth error')) {
-            throw new Error('API-403-Error authenticating to Unsplash')
+            throw new ApiError('Error authenticating to Unsplash', 401, 'Unsplash');
         } else {
-            throw new Error('API-500-Unexpected error during request for images')
+            throw new ApiError('Unexpected error during request for images', 500, 'Unsplash');
         }
     }
 

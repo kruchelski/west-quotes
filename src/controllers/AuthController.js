@@ -58,7 +58,7 @@ const insertUser = async (req, res) => {
 
         // const parsedError = ErrorHelper.sequelizeErrorHelper(err);
         const parsedError = ErrorHelper.errorDelegator(err);
-        res.status(parsedError.status).send(parsedError.msg)
+        res.status(parsedError.status).send(parsedError.message)
     }
 }
 
@@ -75,8 +75,16 @@ const authenticateUser = async (req, res) => {
         const { email, password } = req.body;
 
         // If one of the arguments is missing throws an error
-        if ( !email || !password) {
-            throw new Error('SEQUELIZE-400-Request for loging in is incomplete');
+        let missingArguments = []
+        const registerKeys = ['email', 'password'];
+        for (const key of registerKeys) {
+            if (!req.body[key]) {
+                missingArguments.push(key)
+            }
+        }
+
+        if (missingArguments.length) {
+            throw new AuthError('Missing data to authenticate user', 400, missingArguments)
         }
 
         // Find user by email
@@ -91,14 +99,14 @@ const authenticateUser = async (req, res) => {
 
         //  Verifies if the user is null then throws an error
         if (!user) {
-            throw new Error(`SEQUELIZE-400-The email ${email} or password are incorrect`);
+            throw new AuthError('Email or password wrong', 404);
         }
 
         // Compares the password
         const passwordOk = await bcrypt.compare(password, user.password);
 
         if (!passwordOk) {
-            throw new Error(`SEQUELIZE-400-The email ${email} or password are incorrect`)
+            throw new AuthError('Email or password wrong', 404);
         }
 
         // Generate Access Token
@@ -119,7 +127,7 @@ const authenticateUser = async (req, res) => {
     } catch (err) {
         await transaction.rollback();
         const parsedError = ErrorHelper.sequelizeErrorHelper(err);
-        res.status(parsedError.status).send(parsedError.msg);
+        res.status(parsedError.status).send(parsedError.message);
     }
 }
 

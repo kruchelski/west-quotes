@@ -2,6 +2,9 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
+// Constants
+const TokenConstants = require('../constants/TokenConstants');
+
 /**
  * Generate a token (access or refresh)
  * @param {*} user User instance
@@ -16,4 +19,30 @@ const generateToken = (user, type) => {
     }
 }
 
-module.exports = { generateToken };
+const checkRefreshTokenExpiration = (refreshToken) => {
+    // Retrieve the duration of the refresh token in days
+    let maxDays;
+    try {
+        maxDays = parseInt(TokenConstants.TIME.MAX_DAYS)
+    } catch (err) {
+        // Set to default;
+        maxDays = 2;
+    }
+
+    // If maxDays is less than or equal a zero, then the token will no be expired
+    if (maxDays <= 0) {
+        return true;
+    }
+
+    // Get actual date
+    let actualDate = new Date().toISOString();
+    actualDate = new Date(actualDate);
+
+    // Retrieve refreshToken last refresh date
+    let refreshTokenDate = refreshToken.refresh_date;
+    refreshTokenDate = new Date(refreshTokenDate);
+
+    return (Math.floor((actualDate - refreshTokenDate) / TokenConstants.TIME.MS_PER_DAY) < maxDays);
+}
+
+module.exports = { generateToken, checkRefreshTokenExpiration };
