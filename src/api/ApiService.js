@@ -15,6 +15,7 @@ const getQuote = async () => {
         throw new Error('API-404-Quote not found');
     }
 
+    // Return quote
     return response.data.quote;
 }
 
