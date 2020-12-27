@@ -3,9 +3,6 @@
 // Libraries
 const { Model, Sequelize } = require('sequelize');
 
-// Entities
-const { UserQuote } = require('../models');
-
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -17,8 +14,13 @@ module.exports = (sequelize, DataTypes) => {
       User.belongsToMany(models.Quote, { 
         through: 'UserQuote',
         foreignKey: 'uuid_user'
-      })
+      });
       User.hasOne(models.RefreshToken, {
+        foreignKey: {
+          name: 'uuid_user'
+        }
+      });
+      User.hasMany(models.UserQuote, {
         foreignKey: {
           name: 'uuid_user'
         }

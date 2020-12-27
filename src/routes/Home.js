@@ -1,14 +1,18 @@
-// Entities
-const QuotesController = require('../controllers/QuotesController');
-const api = require('../api/ApiService');
+// Libraries
 const express = require('express');
 const router = express.Router();
 
-router.get('/quote', async (req, res) => QuotesController.generateQuote(req, res));
+// Entities
+const QuotesController = require('../controllers/QuotesController');
+const api = require('../api/ApiService');
 
-router.get('/', (req, res) => {
-    res.status(200).send('Issoo');
-})
+// Middlewares
+const { authenticate } = require('../middlewares/AuthMiddlewares');
+
+/**
+ * Get a quote and an image
+ */
+router.get('/', authenticate, async (req, res) => QuotesController.generateQuote(req, res));
 
 router.get('/quoteOld', async (req, res) => {
     try {

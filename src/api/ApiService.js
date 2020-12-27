@@ -27,7 +27,6 @@ const getQuote = async () => {
  */
 const getImage = async (query) => {
 
-    console.log('Query: ', query);
     // Make request
     const response = await unsplash.get('search/photos', {
         params: {

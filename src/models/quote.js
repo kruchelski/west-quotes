@@ -3,9 +3,6 @@
 // Libraries
 const { Model, Sequelize } = require('sequelize');
 
-// Entities
-const { UserQuote } = require('../models');
-
 module.exports = (sequelize, DataTypes) => {
   class Quote extends Model {
     /**

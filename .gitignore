@@ -3,3 +3,6 @@
 
 # Environment configurations
 .env
+
+# VS Code configurations
+.vscode

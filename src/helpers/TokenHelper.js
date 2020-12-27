@@ -19,6 +19,10 @@ const generateToken = (user, type) => {
     }
 }
 
+/**
+ * Check if the refresh token in the database is still valid
+ * @param {*} refreshToken Refresh token stored in database
+ */
 const checkRefreshTokenExpiration = (refreshToken) => {
     // Retrieve the duration of the refresh token in days
     let maxDays;

@@ -72,7 +72,7 @@ const sequelizeUniqueErrorHandler = (err) => {
         element = err.errors[0].path;
     }
     let { status, message } = SequelizeConstants.ERROR.NAME[err.name];
-    msg = msg.replace('element', element);
+    message = message.replace('element', element);
 
     return { status: status || defaultStatus, message: message || defaultMsg };
 }
