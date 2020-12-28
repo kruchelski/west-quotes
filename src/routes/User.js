@@ -3,34 +3,14 @@ const express = require('express');
 const router = express.Router();
 
 // Entities
-const { User, Quote, RefreshToken } = require('../models');
 const AuthController = require('../controllers/AuthController');
 const TokenController = require('../controllers/TokenController');
 
-
-
-router.get('/', async (req, res) => {
-
-    try {
-        const users = await User.findAll({include: [Quote, RefreshToken]});
-        console.log('===============================')
-        console.log(users);
-        console.log('===============================')
-
-        // console.log(parsedUserts[0].Quotes);
-        console.log('Parece que a conexão deu boa')
-        res.json(users);
-        // res.json(parsedUserts);
-    } catch(err) {
-        console.log('Parece que a conexão não deu boa')
-        console.log(err);
-        res.status(500).send('deu problema')
-    }
-    
-})
+// Middlewares
+const { authenticate } = require('../middlewares/AuthMiddlewares');
 
 /**
- * Route to register a new user to the application
+ * Register a new user in the application
  */
 router.post('/register', async (req, res) => AuthController.insertUser(req, res));
 
@@ -43,5 +23,15 @@ router.post('/login', async (req, res) => AuthController.authenticateUser(req, r
  * Request new access token
  */
 router.post('/token', async (req, res) => TokenController.tokenRenewal(req, res));
+
+/**
+ * Logout an user from the system
+ */
+router.delete('/logout/:uuid', async (req, res) => AuthController.logoutUser(req, res));
+
+/**
+ * Delete an user's account
+ */
+router.delete('/', authenticate, async (req, res) => AuthController.removeUser(req, res));
 
 module.exports = router;

@@ -14,7 +14,12 @@ module.exports = (sequelize, DataTypes) => {
       Quote.belongsToMany(models.User, { 
         through: 'UserQuote',
         foreignKey: 'uuid_quote'
-      })
+      });
+      Quote.hasMany(models.UserQuote, {
+        foreignKey: {
+          name: 'uuid_quote'
+        }
+      });
     }
   };
 

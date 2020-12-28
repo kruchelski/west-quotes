@@ -14,6 +14,7 @@ module.exports = {
               model: 'users',
               key: 'uuid'
             },
+            onDelete: 'CASCADE',
             allowNull: false,
             primaryKey: true,
           },

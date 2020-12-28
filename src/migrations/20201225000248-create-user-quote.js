@@ -19,6 +19,7 @@ module.exports = {
               model: 'users',
               key: 'uuid'
             },
+            onDelete: 'CASCADE',
             unique: 'unique_tag'
           },
           uuid_quote: {

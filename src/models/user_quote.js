@@ -15,8 +15,15 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: {
           name: 'uuid_user',
           allowNull: false,
+        },
+        onDelete: 'cascade'
+      });
+      UserQuote.belongsTo(models.Quote, {
+        foreignKey: {
+          name: 'uuid_quote',
+          allowNull: false,
         }
-      })
+      });
     }
   };
   UserQuote.init({

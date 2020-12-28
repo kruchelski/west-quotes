@@ -39,24 +39,23 @@ const insertUser = async (req, res) => {
 
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
-        
+
         // Creates user
         const user = await User.create({
             username,
             email,
             password: hashedPassword
-        }, { transaction }) 
+        }, { transaction })
 
         // Commit
         await transaction.commit();
 
         // Return generated user UUID
-        res.json({uuid: user.uuid});
+        res.json({ uuid: user.uuid });
     } catch (err) {
         // Rollback changes
         await transaction.rollback();
 
-        // const parsedError = ErrorHelper.sequelizeErrorHelper(err);
         const parsedError = ErrorHelper.errorDelegator(err);
         res.status(parsedError.status).send(parsedError.message)
     }
@@ -68,7 +67,7 @@ const insertUser = async (req, res) => {
  * @param {*} res Response object
  */
 const authenticateUser = async (req, res) => {
-    
+
     const transaction = await sequelize.transaction();
     try {
         // Retrieve information from the body's request
@@ -126,9 +125,84 @@ const authenticateUser = async (req, res) => {
         res.json({ accessToken, refreshToken });
     } catch (err) {
         await transaction.rollback();
+
         const parsedError = ErrorHelper.sequelizeErrorHelper(err);
         res.status(parsedError.status).send(parsedError.message);
     }
 }
 
-module.exports = { insertUser, authenticateUser };
+/**
+ * Logout an user of the system
+ * @param {*} req Request object
+ * @param {*} res Response object
+ */
+const logoutUser = async (req, res) => {
+    // Retrieve transaction object
+    const transaction = await sequelize.transaction();
+
+    try {
+        // Retrieve uuid from the req params
+        const userUuid = req.params.uuid
+
+        // If no uuid is informed throw AuthError
+        if (!userUuid) {
+            throw new AuthError('Error trying to logout', 400, "User's uuid")
+        }
+
+        // Delete records from refresh_tokens table
+        await RefreshToken.destroy({
+            where: {
+                uuid_user: userUuid,
+            }
+        }, { transaction })
+
+        // Commit changes
+        await transaction.commit();
+
+        // Return 204
+        res.status(204).send();
+
+    } catch (err) {
+        // Rollback changes
+        await transaction.rollback();
+
+        const parsedError = ErrorHelper.errorDelegator(err);
+        res.status(parsedError.status).send(parsedError.message)
+    }
+}
+
+/**
+ * Delete an user's account
+ * @param {*} req 
+ * @param {*} res 
+ */
+const removeUser = async (req, res) => {
+    // Retrieve transaction object
+    const transaction = await sequelize.transaction();
+
+    try {
+        // Retrieve user's uuid form request
+        const userUuid = req.user.uuid;
+
+        // Delete
+        await User.destroy({
+            where: {
+                uuid: userUuid
+            }
+        }, { transaction });
+
+        // Commit changes
+        await transaction.commit();
+
+        // Return 204
+        res.status(204).send();
+    } catch {
+        // Rollback changes
+        await transaction.rollback();
+
+        const parsedError = ErrorHelper.errorDelegator(err);
+        res.status(parsedError.status).send(parsedError.message)
+    }
+}
+
+module.exports = { insertUser, authenticateUser, logoutUser, removeUser };

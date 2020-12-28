@@ -128,4 +128,4 @@ const calculateQuoteMetadata = async (quoteRaw, userUuid, transaction) => {
     return newData;
 }
 
-module.exports = { getQuoteMetadata };
+module.exports = { getQuoteMetadata, calculateQuoteMetadata };
