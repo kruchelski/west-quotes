@@ -1,8 +1,10 @@
-<h1 align="center" style="color: #333333">
-  <span style="color:#0f21a1">❝❞</span> WEST QUOTES
+<h1 align="center">
+  ❝❞ WEST QUOTES
 </h1>
 
-<p style="color: #333333; font-size: 1.2rem; text-align: center">Simple application to get some <span style="text-decoration: line-through">well... ok(ish)...</span> awesome Kanye West quotes and a random image based on <em>Mr. West's</em> words</p>
+<p align="center">
+Simple application to get some ~~well... ok(ish)...~~ awesome Kanye West quotes and a random image based on __Mr. West's__ words
+</p>
 
 <!-- Infos -->
 <p align="center">
@@ -19,7 +21,7 @@
 
 ### 😶 Why bother creating this?
 
-This is an application that <span style="text-decoration: line-through">was developed</span> is in development as the final project for the mobile development course of the undergraduate course of Analysis and Systems Development.
+This is an application that ~~was developed~~ is in development as the final project for the mobile development course of the undergraduate course of Analysis and Systems Development.
 
 The requirements of this project envolves:
 - Develop a mobile application using React Native;
@@ -54,17 +56,17 @@ Although there are severak libraries involved in this application, here will be 
 - [NPM](https://www.npmjs.com/)
 
 
-<p style="padding: 10px; background-color: #eaeaea; color: #666666; font-style: italic; border-radius: 6px">
-Note: Make sure you have Node v12.* or above and NPM in command line
-<p>
+
+> Note: Make sure you have Node v12.* or above and NPM in command line
+
 
 ### 🎛 So... How to set up the environment?
 
-As mentioned before, it's required to have Node with version 12 or above and NPM in command line. For the mobile part it's required to have the [Expo CLI](https://docs.expo.io/workflow/expo-cli/), <b><em>but at this moment, the mobile part of the application is still in progress, so it won't be covered for now</em></b>.
+As mentioned before, it's required to have Node with version 12 or above and NPM in command line. For the mobile part it's required to have the [Expo CLI](https://docs.expo.io/workflow/expo-cli/), **__but at this moment, the mobile part of the application is still in progress, so it won't be covered for now__**.
 
 To start the backend you need a few things:
 - Setup some SGDB (like [Postgres](https://www.postgresql.org/) or [MySQL](https://www.mysql.com/)) - The chosen SGDB must be compatible with the Sequelize Dialects (check these [Sequelize Docs](https://sequelize.org/master/manual/dialect-specific-things.html) to see the compatibility list). As the author of this project, I suggest Postgres (just because it was the one I was using and everything works super nice!).
-- Create a database with the name you want (the name must be informed in the Environmental Variables - <em> this will be covered next</em> - By default the application will look for a database named 'west_quotes');
+- Create a database with the name you want (the name must be informed in the Environmental Variables -  __this will be covered next__ - By default the application will look for a database named 'west_quotes');
 - Check the .env.example file in the root of the app. This file has instructions for correctly filling in the data and configuring the file for use by the application. Basically create a copy of the file in the same folder, rename it to only .env (just remove the .example) and put the info needed in the file (the info includes database name, user, host, access token secret and etc...).
 - Install the dependencies of the application:
 
