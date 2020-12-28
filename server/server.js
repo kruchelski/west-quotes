@@ -9,4 +9,4 @@ app.listen(PORT, () => {
 
 app.use('/', homeRouter);
 app.use('/user', userRouter);
-app.use('/quotes', quotesRouter);
+app.use('/quote', quotesRouter);
