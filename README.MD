@@ -2,9 +2,8 @@
   ❝❞ WEST QUOTES
 </h1>
 
-<p align="center">
-Simple application to get some ~~well... ok(ish)...~~ awesome Kanye West quotes and a random image based on __Mr. West's__ words
-</p>
+Simple application to get some ~~well... ok(ish)~~ awesome Kanye West quotes and a random image based on _Mr. West's_ words
+
 
 <!-- Infos -->
 <p align="center">
@@ -62,7 +61,7 @@ Although there are severak libraries involved in this application, here will be 
 
 ### 🎛 So... How to set up the environment?
 
-As mentioned before, it's required to have Node with version 12 or above and NPM in command line. For the mobile part it's required to have the [Expo CLI](https://docs.expo.io/workflow/expo-cli/), **__but at this moment, the mobile part of the application is still in progress, so it won't be covered for now__**.
+As mentioned before, it's required to have Node with version 12 or above and NPM in command line. For the mobile part it's required to have the [Expo CLI](https://docs.expo.io/workflow/expo-cli/), **_but at this moment, the mobile part of the application is still in progress, so it won't be covered for now_**.
 
 To start the backend you need a few things:
 - Setup some SGDB (like [Postgres](https://www.postgresql.org/) or [MySQL](https://www.mysql.com/)) - The chosen SGDB must be compatible with the Sequelize Dialects (check these [Sequelize Docs](https://sequelize.org/master/manual/dialect-specific-things.html) to see the compatibility list). As the author of this project, I suggest Postgres (just because it was the one I was using and everything works super nice!).
