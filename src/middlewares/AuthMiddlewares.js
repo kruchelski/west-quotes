@@ -28,7 +28,7 @@ const authenticate = async (req, res, next) => {
 
         // Verify is token is present
         if (!token) {
-            throw new TokenError('Access token missing', 401);
+            throw new TokenError('Access token missing', 403);
         }
 
         // Verify if token is valid
@@ -36,7 +36,7 @@ const authenticate = async (req, res, next) => {
             
             // If token is not valid, throw TokenError
             if (err) {
-                throw new TokenError('Invalid Access Token', 401);
+                throw new TokenError('Invalid Access Token', 403);
             }
 
             // Find user

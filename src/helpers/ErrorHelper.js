@@ -46,11 +46,11 @@ const authErrorHandler = (err) => {
 
     const { status, message, entities } = err;
     let msg = message;
-    if (entities && entities.lenght) {
+    if (entities && entities.length) {
         msg += ' [';
         entities.forEach((entity, i) => {
             msg += entity;
-            if (i < (entities.lenght - 1)) {
+            if (i < (entities.length - 1)) {
                 msg += ', ';
             }
         })
@@ -87,6 +87,29 @@ const tokenErrorHandler = (err) => {
 
     const { status, message } = err;
 
+    return { status: status || defaultStatus, message: message || defaultMsg };
+}
+
+/**
+ * Quotes's errors handler
+ * @param {*} err Error object
+ */
+const quoteErrorHandler = (err) => {
+    const defaultStatus = 500;
+    const defaultMsg = 'A really terrible error ocurred during the quotes processing :(';
+
+    const { status, message, entities } = err;
+    let msg = message;
+    if (entities && entities.length) {
+        msg += ' [';
+        entities.forEach((entity, i) => {
+            msg += entity;
+            if (i < (entities.length - 1)) {
+                msg += ', ';
+            }
+        })
+        msg += ']'
+    }
     return { status: status || defaultStatus, message: message || defaultMsg };
 }
 
@@ -141,7 +164,8 @@ var errorRegister = {
     ApiError: apiErrorHandler,
     AuthError: authErrorHandler,
     SequelizeUniqueConstraintError: sequelizeUniqueErrorHandler,
-    TokenError: tokenErrorHandler
+    TokenError: tokenErrorHandler,
+    QuoteError: quoteErrorHandler
 }
 
 module.exports = { errorDelegator }
