@@ -83,7 +83,7 @@ const tokenRenewal = async (req, res) => {
         // Rollback changes
         await transaction.rollback();
 
-        const parsedError = ErrorHelper.sequelizeErrorHelper(err);
+        const parsedError = ErrorHelper.errorDelegator(err);
         res.status(parsedError.status).send(parsedError.message)
     }
 }
