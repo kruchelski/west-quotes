@@ -1,8 +1,8 @@
 # Node needed modules for the application
-/node_modules
+server/node_modules
 
 # Environment configurations
-.env
+server/.env
 
 # VS Code configurations
 .vscode

@@ -13,9 +13,9 @@ const TokenConstants = require('../constants/TokenConstants');
 const generateToken = (user, type) => {
     switch(type) {
         case 'access':
-            return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
+            return `Bearer ${jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' })}`;
         case 'refresh':
-            return jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
+            return jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
     }
 }
 

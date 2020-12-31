@@ -1,3 +1,8 @@
+/**
+ * This file is being userd only for tests at this point. Soon it will be deleted
+ */
+
+
 // Entidades
 // const express = require('express');
 // const expressSession = require('express-session');
@@ -7,7 +12,7 @@ require('dotenv').config();
 const Twitter = require('twitter');
 const axios = require('axios');
 
-const { app, PORT } = reuqire('./src/configs/MainConfig');
+const { app, PORT } = require('./src/configs/MainConfig');
 
 // Constants
 const apiKey = process.env.TWITTER_API_KEY;

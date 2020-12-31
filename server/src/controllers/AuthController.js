@@ -93,13 +93,13 @@ const authenticateUser = async (req, res) => {
             }
         })
 
-        // Convert user to JSON
-        user = user.toJSON();
-
         //  Verifies if the user is null then throws an error
         if (!user) {
             throw new AuthError('Email or password wrong', 404);
         }
+
+        // Convert user to JSON
+        user = user.toJSON();
 
         // Compares the password
         const passwordOk = await bcrypt.compare(password, user.password);
