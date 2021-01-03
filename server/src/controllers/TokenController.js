@@ -51,23 +51,20 @@ const tokenRenewal = async (req, res) => {
         }
 
         // Verify refresh token
-        const userToken = await jwt.verify(refreshToken.token, process.env.REFRESH_TOKEN_SECRET);
+        const user = await jwt.verify(refreshToken.token, process.env.REFRESH_TOKEN_SECRET);
 
         // Get information from token
-        const { uuid, username, email, password, twitter } = userToken
+        const { uuid, username, email } = user
 
-        // Build an User instance
-        const user = await User.build({
+        // Build an object with the data to be used in the jwt
+        const userToken = {
             uuid,
             username,
             email,
-            password,
-            email,
-            twitter
-        })
+        }
 
         // Generates new access token
-        newToken = TokenHelper.generateToken(user.toJSON(), 'access');
+        newToken = TokenHelper.generateToken(userToken, 'access');
 
         // Updates refresh token with the actual date
         refreshToken.refresh_date = new Date();

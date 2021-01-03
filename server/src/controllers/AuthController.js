@@ -108,11 +108,18 @@ const authenticateUser = async (req, res) => {
             throw new AuthError('Email or password wrong', 404);
         }
 
+        // Extract data that will be used in the jwt
+        const userToken = {
+            uuid: user.uuid,
+            username: user.username,
+            email: user.email,
+        }
+
         // Generate Access Token
-        const accessToken = TokenHelper.generateToken(user, 'access');
+        const accessToken = TokenHelper.generateToken(userToken, 'access');
 
         // Generate and stores Refresh Token
-        const refreshToken = TokenHelper.generateToken(user, 'refresh');
+        const refreshToken = TokenHelper.generateToken(userToken, 'refresh');
 
         await RefreshToken.create({
             uuid_user: user.uuid,
