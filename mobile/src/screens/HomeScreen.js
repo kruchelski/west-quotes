@@ -1,10 +1,18 @@
-import * as React from 'react';
-import { View, Text } from 'react-native';
+// Basic Imports
+import React, { useContext } from 'react';
+import { View, Text, Button } from 'react-native';
 
-export default () => {
-    return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Teste</Text>
-        </View>
-    );
+// Contexts Imports
+import { AuthContext } from '../contexts/AuthContext';
+
+export default ({ navigation, route }) => {
+
+	const { signOut } = useContext(AuthContext);
+
+	return (
+		<View>
+			<Text>Home Screen</Text>
+			<Button title="SignOut" onPress={() => {signOut()}} />
+		</View>
+	);
 }
