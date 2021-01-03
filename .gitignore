@@ -8,16 +8,16 @@ server/.env
 .vscode
 
 
-west-quotes-mobile/node_modules/**/*
-west-quotes-mobule/.expo/*
-west-quotes-mobule/npm-debug.*
-west-quotes-mobule/*.jks
-west-quotes-mobule/*.p8
-west-quotes-mobule/*.p12
-west-quotes-mobule/*.key
-west-quotes-mobule/*.mobileprovision
-west-quotes-mobule/*.orig.*
-west-quotes-mobule/web-build/
+mobile/node_modules/
+mobile/.expo/*
+mobile/npm-debug.*
+mobile/*.jks
+mobile/*.p8
+mobile/*.p12
+mobile/*.key
+mobile/*.mobileprovision
+mobile/*.orig.*
+mobile/web-build/
 
 # macOS
 .DS_Store
