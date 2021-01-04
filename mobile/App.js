@@ -11,83 +11,54 @@ import MainStackNavigator from './src/navigators/MainStackNavigator'
 // Screens imports
 import SplashScreen from './src/screens/SplashScreen';
 
+// Reducers imports
+import { initialAuthState, authReducer } from './src/reducers/AuthReducer';
+
 const RootStack = createStackNavigator();
 
 export default function App({ navigation }) {
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [userToken, setUserToken] = useState(null);
 
-  const initialLoginState = {
-    isLoading: true,
-    userToken: null
-  }
-
-  const loginReducer = (prevState, action) => {
-    switch( action.type ) {
-      case 'RETRIEVE_TOKEN':
-        console.log(action)
-        return {
-          ...prevState,
-          userToken: action.token,
-          isLoading: false
-        }
-      case 'SIGN_IN':
-        console.log(action)
-        return {
-          ...prevState,
-          userToken: action.token,
-          isLoading: false
-        }
-      case 'SIGN_UP':
-        console.log(action)
-        return {
-          ...prevState,
-          userToken: action.token,
-          isLoading: false
-        }
-      case 'SIGN_OUT':
-        console.log(action)
-        return {
-          ...prevState,
-          userToken: action.token,
-          isLoading: false
-        }
-    }
-  }
-
-  const [loginState, dispatch] = useReducer(loginReducer, initialLoginState);
+  const [authState, dispatch] = useReducer(authReducer, initialAuthState);
 
   useEffect(() => {
     setTimeout(() => {
-      dispatch({ type: 'RETRIEVE_TOKEN', token: 'Loading Token' })
+      // Implement: Search for refresh token in the async storage and try validate it
+      dispatch({ type: 'RETRIEVE_TOKEN', refreshToken: 'Loading Token' })
     }, 2000)
   }, []);
 
   const authContext = useMemo(() => ({
     signIn: () => {
+      // Implement: Sign in existent user
       console.log('Signing In')
-      // setUserToken('token');
-      // setIsLoading(false);
-      let userToken = 'tokenzinho'
-      dispatch({ type: 'SIGN_IN', token: userToken })
+      dispatch({ 
+        type: 'SIGN_IN', 
+        accessToken: 'SignIn accessToken',
+        refreshToken: 'SignIn refreshToken',
+        username: 'SignIn username',
+        email: 'SignIn email'
+      })
     },
     signOut: () => {
+      // Signout user
       console.log('Signing Out')
-      // setUserToken(null);
-      // setIsLoading(false);
-      dispatch({ type: 'SIGN_OUT' })
+      dispatch({ 
+        type: 'SIGN_OUT',
+      })
     },
     signUp: () => {
+      // Register a new user in the application
       console.log('Signing Up')
-      // setUserToken('token');
-      // setIsLoading(false);
-      let userToken = 'tokenzinho'
-      dispatch({ type: 'SIGN_UP', token: userToken })
+      dispatch({ 
+        type: 'SIGN_UP',
+        accessToken: 'SignUp accessToken',
+        refreshToken: 'SignUp refreshToken',
+        username: 'SignUp username',
+        email: 'SignUp email'
+      })
 
     }
   }), [])
-
-
 
   return (
     <AuthContext.Provider value={authContext}>
@@ -98,11 +69,11 @@ export default function App({ navigation }) {
           }
         >
           {
-            loginState.isLoading ?
+            authState.isLoading ?
               (
                 <RootStack.Screen name="Splash" component={SplashScreen} />
               ) :
-              !loginState.userToken ?
+              !authState.refreshToken ?
                 (
                   <RootStack.Screen
 
