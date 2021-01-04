@@ -20,14 +20,14 @@ export default function App({ navigation }) {
 
   const [authState, dispatch] = useReducer(authReducer, initialAuthState);
 
-  useEffect(() => {
-    setTimeout(() => {
-      // Implement: Search for refresh token in the async storage and try validate it
-      dispatch({ type: 'RETRIEVE_TOKEN', refreshToken: 'Loading Token' })
-    }, 2000)
-  }, []);
-
   const authContext = useMemo(() => ({
+    retrieveToken: async () => {
+      const tokenRetrieve = 
+      dispatch({ 
+        type: 'RETRIEVE_TOKEN', 
+        refreshToken: 'Loading Token' 
+      })
+    },
     signIn: () => {
       // Implement: Sign in existent user
       console.log('Signing In')

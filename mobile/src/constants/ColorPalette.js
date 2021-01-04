@@ -1,0 +1,15 @@
+export const mainTheme = {
+    mainColor: '#0721A1',
+    mainColorLigth: '#2540CD',
+    mainColorDark: '#020661',
+    bgColor0: '#FEFEFE',
+    bgColor1: '#FAFAFA',
+    bgColor2: '#F8F8F8',
+    bgColor3: '#F3F3F3',
+    fgColor0: '#333333',
+    fgColor1: '#444444',
+    fgColor2: '#666666',
+    fgColor3: '#888888',
+    colorLight: '#EEEEEE',
+    colorDark: '#333333',
+}
