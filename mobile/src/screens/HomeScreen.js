@@ -7,12 +7,13 @@ import { AuthContext } from '../contexts/AuthContext';
 
 export default ({ navigation, route }) => {
 
-	const { signOut } = useContext(AuthContext);
+	const { user } = useContext(AuthContext);
 
 	return (
-		<View>
+		<View style={{flex: 1, justifyContent: 'center'}}>
+			<Text>{`Olá ${user.name} (${user.email})`}</Text>
 			<Text>Home Screen</Text>
-			<Button title="SignOut" onPress={() => {signOut()}} />
+			<Button title="SignOut" onPress={() => {}} />
 		</View>
 	);
 }
