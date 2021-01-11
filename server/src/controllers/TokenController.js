@@ -75,7 +75,7 @@ const tokenRenewal = async (req, res) => {
         await transaction.commit();
 
         // Return new access token
-        res.json({ accessToken: newToken });
+        res.json({ accessToken: newToken, user: userToken });
     } catch (err) {
         // Rollback changes
         await transaction.rollback();

@@ -1,22 +1,32 @@
 // Basic imports
-import React, { useContext } from 'react';
+import React from 'react';
+import { View, ActivityIndicator } from 'react-native';
+import { useAuth } from '../contexts/AuthContext';
 
-// Contexts imports
-import { AuthContext } from '../contexts/AuthContext';
 
 // Navigators imports
 import AuthStackNavigator from './AuthStackNavigator';
 import MainStackNavigator from './MainStackNavigator'
 
 const Navigators = () => {
-    const { signed } = useContext(AuthContext);
- 
-    if (signed) {
-        return <MainStackNavigator />
-    }
-    return (
-        <AuthStackNavigator />
-    );
+	const { signed, loading } = useAuth();
+
+	if (loading) {
+		console.log('Tá carregando')
+		return (
+			<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+				<ActivityIndicator size='large' />
+			</View>
+		)
+	}
+
+
+	if (signed) {
+		return <MainStackNavigator />
+	}
+	return (
+		<AuthStackNavigator />
+	);
 }
 
 export default Navigators;

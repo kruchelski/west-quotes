@@ -129,7 +129,7 @@ const authenticateUser = async (req, res) => {
         await transaction.commit();
 
         // Return the tokens
-        res.json({ accessToken, refreshToken });
+        res.json({ accessToken, refreshToken, user: userToken });
     } catch (err) {
         await transaction.rollback();
 
