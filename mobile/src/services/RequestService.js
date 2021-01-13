@@ -1,15 +1,12 @@
 // Imports
-import {
-	getAccessToken,
-	setAccessToken,
-	getRefreshToken,
-	setRefreshToken,
-	getUserInfo
-} from './TokenService';
-import { server } from '../config/AxiosConfig';
+import * as tokenService from './TokenService';
+import { server } from '../config/RequestConfig';
 import { ENDPOINTS } from '../constants/Requests';
 
-export const makeRequest = async (type, body = null, params = null, retry = null) => {
+// Configs imports
+import { setDefaultHeaders } from '../config/RequestConfig';
+
+export const makeRequest = async (endpoint, body = null, params = null, retry = null) => {
 
 }
 
@@ -21,7 +18,7 @@ export const makeRequest = async (type, body = null, params = null, retry = null
  */
 export const tokenRenewal = async (callback = null, body = null, params = null) => {
 	// Retrieves the refreshToken from the storage
-	const refreshToken = await getRefreshToken();
+	const refreshToken = await tokenService.getRefreshToken();
 
 	// If there's no refresh token, return null
 	if (!refreshToken) {
@@ -33,20 +30,14 @@ export const tokenRenewal = async (callback = null, body = null, params = null) 
 		let { url, type, body } = ENDPOINTS['tokenRenewal'];
 		const client = _getRequestFunction[type];
 		body.token = refreshToken;
-		const newToken = await client(url, { token: body.token })
+		const response = await client(url, { token: body.token })
 
-		if (!newToken) {
+		if (!response || response.accessToken) {
 			return null;
 		}
 
-		// Stores the new access token
-		try {
-			setAccessToken(newToken);
-		} catch (err) {
-			console.log('Error Token Renewal');
-			console.log(err);
-			return null;
-		}
+		// Set the new access token as the default Authorization
+		setDefaultHeaders('Authorization', response.accessToken);
 
 		// If it there's a callback, call it back
 		if (callback) {
@@ -57,14 +48,14 @@ export const tokenRenewal = async (callback = null, body = null, params = null) 
 	} catch (err) {
 
 	}
+}
 
-	/**
-	 * Return a axios function according to the type of the request
-	 */
-	const _getRequestFunction = {
-		get: server.get,
-		post: server.post,
-		put: server.put,
-		delete: server.delete
-	}
+/**
+ * Return a axios function according to the type of the request
+ */
+const _getRequestFunction = {
+	get: server.get,
+	post: server.post,
+	put: server.put,
+	delete: server.delete
 }

@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
  */
 export const getRefreshToken = async () => {
 	try {
-		return await AsyncStorage.getItem('refreshToken');
+		return await AsyncStorage.getItem('@west-quotes:refreshToken');
 	} catch (err) {
 		console.log(err);
 		return null;
@@ -18,35 +18,15 @@ export const getRefreshToken = async () => {
  * @param {*} refreshToken Refresh token (JWT)
  */
 export const setRefreshToken = async (refreshToken) => {
-	await AsyncStorage.setItem('refreshToken', refreshToken)
-}
-
-/**
- * Retrieve the accessToken from the async storage
- */
-export const getAccessToken = async () => {
-	try {
-		return await AsyncStorage.getItem('accessToken');
-	} catch {
-		console.log(err);
-		return null;
-	}
-}
-
-/**
- * Stores an access token
- * @param {*} accessToken Access Token (JWT)
- */
-export const setAccessToken = async (accessToken) => {
-	await AsyncStorage.setItem('accessToken', accessToken);
+	await AsyncStorage.setItem('@west-quotes:refreshToken', refreshToken)
 }
 
 /**
  * Retrieve the user info from the async storage
  */
-export const getUser = () => {
+export const getUser = async () => {
 	try {
-		let user =  await AsyncStorage.getItem('user');
+		let user =  await AsyncStorage.getItem('@west-quotes:user');
 		if (!user) {
 			throw new Error('No user in the async storage');
 		}
@@ -59,8 +39,15 @@ export const getUser = () => {
 
 /**
  * Stores an user
- * @param {*} user User ({username: string, email: string}) 
+ * @param {*} user User ({ uuid: string, username: string, email: string }) 
  */
-export const setUser = (user) => {
-	await AsyncStorage.setItem('user', user);
+export const setUser = async (user) => {
+	await AsyncStorage.setItem('@west-quotes:user', JSON.parse(user));
+}
+
+/**
+ * Clears the storage
+ */
+export const clearStorage = async () => {
+	await AsyncStorage.clear();
 }

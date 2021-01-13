@@ -1,17 +1,18 @@
 // Basic imports
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Configs imports
-import { server } from '../config/AxiosConfig';
+import { setDefaultHeaders, removeDefaultHeader } from '../config/RequestConfig';
 
 // Services imports
 import * as auth from '../services/AuthService';
+import * as tokenService from '../services/TokenService';
 
 // Basic object provided to the AuthContext
 let authContextObject = {
 	signed: false,			// User is logged
 	signIn: null,				// SignIn Function
+	signUp: null,				// SignUp Function
 	signOut: null,			// SignOut Function
 	loading: true,			// App is loading (retrieving possible refresh token stored)
 	error: {
@@ -46,9 +47,9 @@ export const AuthProvider = ({ children }) => {
 		const loadStorageData = async () => {
 			try {
 				// Retrieves the user and the refreshToken from the localStorage
-				const storageUser = await AsyncStorage.getItem('@west-quotes:user');
-				const storageRefreshToken = await AsyncStorage.getItem('@west-quotes:refreshToken');
-				
+				const storageUser = await tokenService.getUser();
+				const storageRefreshToken = await tokenService.getRefreshToken();
+
 				if (!storageRefreshToken) {
 					// If there isn't a token, set the user as null;
 					setUser(null);
@@ -59,16 +60,17 @@ export const AuthProvider = ({ children }) => {
 
 					// Checks the content of response
 					if (response?.accesToken) {
-						// It there's a new token, set as default in the request header
-						server.defaults.headers['Authorization'] = response.accessToken
+						// // It there's a new token, set as default in the request header
+						// server.defaults.headers['Authorization'] = response.accessToken
 
 						// Sets the user
 						if (response?.user) {
 							// Tries to get the user returned from the back end
 							setUser(response.user);
-							
+
 							// Updates the storage with the user
-							await AsyncStorage.setItem('@west-quotes:user', JSON.stringify(response.user));
+							await tokenService.setUser(response.user);
+
 						} else if (storageUser) {
 							// If no user returned from the back end, tries to get the user from the async storage
 							setUser(JSON.parse(storageUser));
@@ -99,23 +101,82 @@ export const AuthProvider = ({ children }) => {
 	})
 
 	/**
-	 * SignIn an user into the application
+	 * Sign In an user in the application
+	 * @param {*} email Email of the user
+	 * @param {*} password Password
 	 */
-	const signIn = async () => {
+	const signIn = async (email, password) => {
 		try {
+			// Show loader
+			setLoading(true);
+
 			// Makes request to login
-			const response = await auth.signIn();
-			setUser(response.user);
-	
-			server.defaults.headers['Authorization'] = reponse.accessToken
-			// Fazer isso na busca no async storage e onde mais for necessário
-			// Verificar se não vai dar problema ter o authorization nas roatas que não precisa
-	
-			await AsyncStorage.setItem('@west-quotes:user', JSON.stringify(response.user));
-			await AsyncStorage.setItem('@west-quotes:token', response.token);
+			const response = await auth.signIn(); // TODO: Change to the correct endpoint
+
+			// If the response is missing some data then set as error
+			if (!response || !response.user || !response.accesToken || !response.refreshToken) {
+				setUser(null);
+				setErrorState({ state: true, msg: 'Missing authentication data from the server' })
+
+			} else {
+
+				// Saves the user and the refresh token in the async storage
+				await tokenService.setUser(response.user);
+				await tokenService.setRefreshToken(response.refreshToken);
+
+				// Sets the default header
+				setDefaultHeaders('Authorization', response.accessToken);
+
+				// Sets the user
+				setUser(response.user);
+			}
 
 		} catch (err) {
+			// In case any error happens
+			console.log('[AuthContext - signIn] ERROR!'); // TODO: temp
+			console.log(err)																			 // TODO: temp
+			setUser(null);
+			setErrorState({ state: true, msg: err.error || err.message || 'An unexpected error happened in the signIn' })
+		} finally {
+			setLoading(false);
+		}
+	}
 
+	/**
+	 * Register a new user into the system
+	 * @param {*} username User's username
+	 * @param {*} email User's email
+	 * @param {*} password User's password
+	 */
+	const signUp = async (username, email, password) => {
+		try {
+			// Show loader
+			setLoading(true);
+
+			// Makes the request to register an user
+			const response; // TODO: Set correct endpoint to signup
+
+			// If there's missing data in the response set user as null and se an error
+			if (!response || !response.uuid) {
+				setUser(null);
+				setErrorState({ state: true, msg: 'Missing register data from the server' })
+
+			} else {
+
+				// Calls the signIn function
+				await signIn(email, password);
+			}
+		} catch (err) {
+
+			// In case any error happens
+			console.log('[AuthContext - signUp] ERROR!'); // TODO: temp
+			console.log(err)																			 // TODO: temp
+			setUser(null);
+			setErrorState({ state: true, msg: err.error || err.message || 'An unexpected error happened in the signUp' })
+		} finally {
+
+			// Hide loader
+			setLoading(false);
 		}
 	}
 
@@ -123,7 +184,37 @@ export const AuthProvider = ({ children }) => {
 	 * SignOut an user of the application
 	 */
 	const signOut = async () => {
-		await AsyncStorage.clear();
+		try {
+			
+			// Show loader
+			setLoading(true);
+
+			// Makes request to logout user
+			// TODO: write the request here
+
+			// Clear the storage
+			await tokenService.clearStorage();
+
+			// Remove default Authorization header
+			removeDefaultHeader('Authorization');
+
+			// Sets the user as null
+			setUser(null);
+
+		} catch (err) {
+
+				// In case any error happens
+				console.log('[AuthContext - signOut] ERROR!'); // TODO: temp
+				console.log(err)																			 // TODO: temp
+				setUser(null);
+				setErrorState({ state: true, msg: err.error || err.message || 'An unexpected error happened in the signIn' })
+		
+		} finally {
+
+			// Hide loader
+			setLoading(false);
+		}
+		await tokenService.clearStorage();
 		setUser(null);
 	}
 
@@ -133,20 +224,23 @@ export const AuthProvider = ({ children }) => {
 
 	return (
 		<AuthContext.Provider value={{
-			signed: !!user, 
-			user, 
-			signIn, 
-			signOut, 
-			loading, 
+			signed: !!user,
+			user,
+			signIn,
+			signUp,
+			signOut,
+			loading,
 			error: errorState
 		}}>
-			{ children }
+			{ children}
 		</AuthContext.Provider>
 	)
 }
 
+/**
+ * Returns the AuthContext for usage
+ */
 export const useAuth = () => {
 	const context = useContext(AuthContext);
-
 	return context;
 }
