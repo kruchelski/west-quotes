@@ -55,12 +55,14 @@ const authenticate = async (req, res, next) => {
 
             // Send control to next middleware
             next();
-        }).catch(err => {
+        }).catch(async err => {
+            await transaction.rollback();
             // This doesn't sound right but it works (at least for now...)
             const parsedError = ErrorHelper.errorDelegator(err);
             res.status(parsedError.status).send(parsedError.message);
         })
     } catch (err) {
+        await transaction.rollback();
         const parsedError = ErrorHelper.errorDelegator(err);
         res.status(parsedError.status).send(parsedError.message);
     }

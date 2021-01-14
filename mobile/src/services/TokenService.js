@@ -31,8 +31,8 @@ export const getUser = async () => {
 			throw new Error('No user in the async storage');
 		}
 		return JSON.parse(user);
-	} catch {
-		console.log(err);
+	} catch (err) {
+		console.log(err.message);
 		return null;
 	}
 }
@@ -42,7 +42,7 @@ export const getUser = async () => {
  * @param {*} user User ({ uuid: string, username: string, email: string }) 
  */
 export const setUser = async (user) => {
-	await AsyncStorage.setItem('@west-quotes:user', JSON.parse(user));
+	await AsyncStorage.setItem('@west-quotes:user', JSON.stringify(user));
 }
 
 /**

@@ -9,20 +9,24 @@ import { signIn } from '../services/AuthService';
 
 export default ({ navigation, route }) => {
 
-	const { signed, signIn, user } = useAuth();
+	const { signed, signIn, signUp, user } = useAuth();
 
 	console.log(signed);
 	console.log(user);
 
 	const handleSignIn = async () => {
-		signIn();
+		await signIn();
+	}
+
+	const handleSignUp = async () => {
+		await signUp();
 	}
 
 	return (
 		<View>
 			<Text>Register Screen</Text>
-			<Button title={'SIGNUP'} onPress={() => {handleSignIn()}} />
-			<Button title={'SIGNIN'} onPress={() => { }} />
+			<Button title={'SIGNUP'} onPress={() => { handleSignUp() }} />
+			<Button title={'SIGNIN'} onPress={() => { handleSignIn() }} />
 		</View>
 	);
 }

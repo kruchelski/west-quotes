@@ -7,7 +7,7 @@ import axios from 'axios';
  * Creates an instance to make requests
  */
 export const server = axios.create({
-    baseURL: 'http://localhost:3002',
+    baseURL: 'http://10.0.2.2:3002',
 });
 
 /**
