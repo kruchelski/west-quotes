@@ -191,6 +191,11 @@ const removeUser = async (req, res) => {
         // Retrieve user's uuid form request
         const userUuid = req.user.uuid;
 
+        // If no uuid is informed throw AuthError
+        if (!userUuid) {
+            throw new AuthError('Error trying to remove user', 400, "User's uuid")
+        }
+
         // Delete
         await User.destroy({
             where: {
@@ -212,4 +217,60 @@ const removeUser = async (req, res) => {
     }
 }
 
-module.exports = { insertUser, authenticateUser, logoutUser, removeUser };
+const editUser = async (req, res) => {
+    // Retrieve transaction object
+    const transaction = await sequelize.transaction();
+
+    try {
+        // Retrieve the attributes from the body
+        const { username, email, password } = req.body;
+
+        // Retrieve de UUID from the request
+        const userUuid = req.user.uuid;
+
+        // If no uuid is informed throw AuthError
+        if (!userUuid) {
+            throw new AuthError('Error trying to edit user', 400, "User's uuid")
+        }
+
+        // Search the user in the database
+        let user = await User.findOne({
+            where: {
+                uuid : userUuid
+            }
+        }, { transaction })
+
+        //  Verifies if the user is null then throws an error
+        if (!user) {
+            throw new AuthError('User not found', 404);
+        }
+
+        // Update only the attributes that are valid
+        user.username = username ? username : user.username;
+        user.email = email ? email : user.email;
+
+        // If it's changing the password, hash the new password
+        if (password) {
+            const hashedPassword = await bcrypt.hash(password, 10);
+            user.password = hashedPassword;
+        }
+
+        // Save
+        await user.save({ transaction })
+
+        // Commit
+        await transaction.commit();
+
+        // Return 204
+        res.status(204).send();
+
+    } catch (err) {
+        // Rollback changes
+        await transaction.rollback();
+
+        const parsedError = ErrorHelper.errorDelegator(err);
+        res.status(parsedError.status).send(parsedError.message)
+    }
+}
+
+module.exports = { insertUser, authenticateUser, logoutUser, removeUser, editUser };

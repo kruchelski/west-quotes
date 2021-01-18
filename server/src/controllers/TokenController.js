@@ -54,13 +54,28 @@ const tokenRenewal = async (req, res) => {
         const user = await jwt.verify(refreshToken.token, process.env.REFRESH_TOKEN_SECRET);
 
         // Get information from token
-        const { uuid, username, email } = user
+        const { uuid } = user
 
-        // Build an object with the data to be used in the jwt
-        const userToken = {
-            uuid,
-            username,
-            email,
+        // Find user in the database
+        let userToken = await User.findOne({
+            where: {
+                uuid
+            }
+        }, { transaction });
+
+        // If the user is not found
+        if (!userToken) {
+            throw new TokenError('User not found in the database', 500)
+        }
+
+        // Converts user to json
+        userToken = userToken.toJSON();
+
+        // Extract only the needed data
+        userToken = {
+            uuid: userToken.uuid,
+            username: userToken.username,
+            email: userToken.email
         }
 
         // Generates new access token
@@ -69,7 +84,6 @@ const tokenRenewal = async (req, res) => {
         // Updates refresh token with the actual date
         refreshToken.refresh_date = new Date();
         await refreshToken.save({ transaction })
-
 
         // Commit changes
         await transaction.commit();

@@ -34,4 +34,9 @@ router.delete('/logout/:uuid', async (req, res) => AuthController.logoutUser(req
  */
 router.delete('/', authenticate, async (req, res) => AuthController.removeUser(req, res));
 
+/**
+ * Edit an user's account
+ */
+router.put('/', authenticate, async (req, res) => AuthController.editUser(req, res));
+
 module.exports = router;

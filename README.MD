@@ -11,9 +11,9 @@ Simple application to get some ~~well... ok(ish)~~ awesome Kanye West quotes and
 
   <img src="https://img.shields.io/github/last-commit/kruchelski/west-quotes?label=updated%20at&labelColor=0f21a1&color=777777" alt="Update Date" />
 
-  <img src="https://img.shields.io/github/v/tag/juliolmuller/the-movie-search-app?label=latest%20version&labelColor=0f21a1&color=777777" alt="Latest Version" />
+  <img src="https://img.shields.io/github/v/tag/kruchelski/west-quotes?label=latest%20version&labelColor=0f21a1&color=777777" alt="Latest Version" />
 
-  <img src="https://img.shields.io/github/license/juliolmuller/the-movie-search-app?labelColor=0f21a1&color=777777" alt="Project License" />
+  <img src="https://img.shields.io/github/license/kruchelski/west-quotes?labelColor=0f21a1&color=777777" alt="Project License" />
 </p>
 
 <div style="color:#333333">
@@ -36,7 +36,7 @@ The application is divided in two parts: the mobile app and the back end (API). 
 
 ### 🚜 What is under the hood?
 
-Although there are severak libraries involved in this application, here will be listed only the main ones:
+Although there are several libraries involved in this application, here will be listed only the main ones:
 
 #### Third Party APIs:
 - [Kanye.REST API](https://kanye.rest/)
