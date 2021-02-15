@@ -10,7 +10,7 @@ const Navigators = () => {
 
 	if (loadingApp) {
 		return (
-			<SplashScreen setLoadingApp={setLoadingApp} />
+			<SplashScreen setLoadingApp={ setLoadingApp } />
 		)
 	} else {
 		if (!!authContext.state.user) {

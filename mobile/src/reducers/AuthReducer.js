@@ -108,12 +108,7 @@ const authReducerApi = () => {
       // In case any error happens
       console.log('[AuthReducer - loadStorageData] ERROR!'); // TODO: temp
 
-      dispatch({
-        type: 'ERROR',
-        payload: {
-          error: err.error || err.message || 'An unexpected error happened while trying to authenticate',
-        }
-      })
+      throw err;
 
     }
   }
@@ -172,18 +167,13 @@ const authReducerApi = () => {
       // In case any error happens
       console.log('[AuthReducer - signIn] ERROR!'); // TODO: temp
 
-      dispatch({
-        type: 'ERROR',
-        payload: {
-          error: err.error || err.message || 'An unexpected error happened while trying to authenticate',
-        }
-      })
+      throw err;
 
     }
   }
 
   const signUp = async (username, email, password) => {
-		try {
+    try {
 
       // const requestSignUpBody = {
       //   username: username.trim(),
@@ -191,17 +181,17 @@ const authReducerApi = () => {
       //   password,
       // }
 
-			const requestSignUpBody = {
-				username: 'nilce',
-				email: 'nilce@teste.com',
-				password: 'nilce'
-			}
+      const requestSignUpBody = {
+        username: 'nilce',
+        email: 'nilce@teste.com',
+        password: 'nilce'
+      }
 
-			// Makes the request to register an user
-			const response = await httpService.makeRequest('signUp', requestSignUpBody, null, false);
+      // Makes the request to register an user
+      const response = await httpService.makeRequest('signUp', requestSignUpBody, null, false);
 
-			// If there's missing data in the response set user as null and se an error
-			if (!response || !response.data || !response.data.uuid) {
+      // If there's missing data in the response set user as null and se an error
+      if (!response || !response.data || !response.data.uuid) {
         dispatch({
           type: 'ERROR',
           payload: {
@@ -209,28 +199,23 @@ const authReducerApi = () => {
           }
         })
 
-			} else {
+      } else {
 
-				// Calls the signIn function
-				await signIn(email, password);
-			}
-		} catch (err) {
+        // Calls the signIn function
+        await signIn(email, password);
+      }
+    } catch (err) {
 
-			// In case any error happens
+      // In case any error happens
       console.log('[AuthReducer - signUp] ERROR!'); // TODO: temp
 
-      dispatch({
-        type: 'ERROR',
-        payload: {
-          error: err.error || err.message || 'An unexpected error happened while trying to register',
-        }
-      })
+      throw err;
 
-		}
-	}
+    }
+  }
 
   const signOut = async () => {
-		try {
+    try {
       if (!state.user || !state.user.uuid) {
         await StorageService.clearStorage();
         removeDefaultHeader('Authorization');
@@ -239,34 +224,41 @@ const authReducerApi = () => {
         })
         return;
       }
-			
+
       // Makes request to logout user
-			await httpService.makeRequest('signOut', false, state.user.uuid, false);
+      await httpService.makeRequest('signOut', false, state.user.uuid, false);
 
-			// Clear the storage
-			await StorageService.clearStorage();
+      // Clear the storage
+      await StorageService.clearStorage();
 
-			// Remove default Authorization header
-			removeDefaultHeader('Authorization');
+      // Remove default Authorization header
+      removeDefaultHeader('Authorization');
 
-		} catch (err) {
+    } catch (err) {
 
-				// In case any error happens
-        console.log('[AuthReducer - signOut] ERROR!'); // TODO: temp
+      // In case any error happens
+      console.log('[AuthReducer - signOut] ERROR!'); // TODO: temp
 
-        dispatch({
-          type: 'ERROR',
-          payload: {
-            error: err.error || err.message || 'An unexpected error happened while trying to sign out',
-          }
-        })
-		
-		} finally {
+      throw err;
 
-			await StorageService.clearStorage();
+    } finally {
 
-		}
-	}
+      await StorageService.clearStorage();
+
+    }
+  }
+
+  const errorHandler = (errorObject, defaultMessage = null) => {
+    dispatch({
+      type: 'ERROR',
+      payload: {
+        error: errorObject.error || 
+          errorObject.message || 
+          defaultMessage ||
+          'An unexpected error happened',
+      }
+    })
+  }
 
   // Return functions and state
   return {
@@ -274,7 +266,8 @@ const authReducerApi = () => {
     loadStorageData,
     signUp,
     signIn,
-    signOut
+    signOut,
+    errorHandler
   }
 
 }
