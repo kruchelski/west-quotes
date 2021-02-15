@@ -1,15 +1,12 @@
 import { server } from '../config/RequestConfig';
 import { ENDPOINTS } from '../constants/Requests';
-import { UserService } from './index';
+import * as UserService from './UserService';
 
 import { setDefaultHeaders } from '../config/RequestConfig';
 
 export const makeRequest = async (endpoint, requestBody = null, params = null, retry = null) => {
 
 	try {
-
-		console.log('endpoint que ta chamando');
-		console.log(endpoint);
 
 		// Retrieves the information about the request
 		const requestInfo = ENDPOINTS[endpoint];
@@ -31,7 +28,7 @@ export const makeRequest = async (endpoint, requestBody = null, params = null, r
 		if (requestInfo.headers) {
 			headers = requestInfo.headers;
 		}
-
+		
 		// Sets body
 		let body = null;
 		if (requestInfo.body) {
@@ -41,18 +38,13 @@ export const makeRequest = async (endpoint, requestBody = null, params = null, r
 		// Makes the request
 		return await client( url, body, headers);
 	} catch (err) {
-		console.log(`[RequestService - ${endpoint}] ERROR!`); // TODO: temp
-		// console.log(err.response);
-		console.log(typeof err.response.status);
-		if (err.response.status === 403 && retry) {
-			console.log('Token Invalid, trying new request')
+
+		if (err?.response?.status === 403 && retry) {
 			return await tokenRenewal(endpoint, requestBody, params);
 		} else {
-			throw new Error(`[${err.response.status}] ${err.response.data}`);
+			throw new Error(`[${err?.response?.status || 'Sem Status'}] ${err?.response?.data}`);
 		}
 
-
-		// Verificar o erro de token e ver se tem retry pra tentar buscar um novo token
 	}
 
 }
@@ -66,8 +58,6 @@ export const makeRequest = async (endpoint, requestBody = null, params = null, r
 export const tokenRenewal = async (callback = null, body = null, params = null) => {
 	// Retrieves the refreshToken from the storage
 	const refreshToken = await UserService.getRefreshTokenFromStorage();
-	console.log('Is there a refresh Token??');
-	console.log(refreshToken);
 
 	// If there's no refresh token, return null
 	if (!refreshToken) {
@@ -79,8 +69,6 @@ export const tokenRenewal = async (callback = null, body = null, params = null) 
 		const requestInfo = ENDPOINTS['tokenRenewal'];
 		const client = _getRequestFunction[requestInfo.type];
 		const response = await client(requestInfo.url, { token: refreshToken });
-		console.log('Response do token renewal');
-		console.log(response.data)
 
 		if (!response || !response.data || !response.data.accessToken) {
 			return null;
@@ -96,8 +84,6 @@ export const tokenRenewal = async (callback = null, body = null, params = null) 
 			return response;
 		}
 	} catch (err) {
-		console.log(`[RequestService - tokenRenewal] ERROR!`); // TODO: temp
-		console.log(err)
 		throw new Error(`[${err.response.status}] ${err.response.data}`);
 	}
 }

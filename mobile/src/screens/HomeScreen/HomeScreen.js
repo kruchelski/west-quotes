@@ -1,24 +1,21 @@
-// Basic Imports
 import React from 'react';
 import { View, Text, Button } from 'react-native';
-import { useAuth } from '../contexts/AuthContext';
-
-// Services Imports
-import * as httpService from '../services/HttpService';
-
+import { useAuth } from '../../hooks';
+import { HttpService } from '../../services';
 
 export default ({ navigation, route }) => {
 
-	const { user, signOut } = useAuth();
+	const { authState, signOut } = useAuth();
+
 	const handleSignout = async () => {
 		await signOut();
 	}
 
 	const handleGetQuote = async () => {
 		try {
-			const response = await httpService.makeRequest('getQuote', null, null, true);
-			console.log(response.data);
+			const response = await HttpService.makeRequest('getQuote', null, null, true);
 		} catch (err) {
+			// TODO: Create an error handler
 			console.log('[HomeScreen - handleGetQuote] ERROR!');
 			console.log(err);
 		}
@@ -26,7 +23,7 @@ export default ({ navigation, route }) => {
 
 	return (
 		<View style={{flex: 1, justifyContent: 'center'}}>
-			<Text>{`Olá ${user.username} (${user.email})`}</Text>
+			<Text>{`Olá ${authState?.user?.username || 'user'} (${authState?.user?.email || 'email '})`}</Text>
 			<Text>Home Screen</Text>
 			<Button title="GetQuote" onPress={() => handleGetQuote()} />
 			<Button title="SignOut" onPress={() => handleSignout()} />

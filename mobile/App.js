@@ -1,12 +1,7 @@
-// Basic Imports
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-
-// Import Navigators
 import Navigators from './src/navigators';
-
-// Import Providers
-import { AuthProvider } from './src/contexts/AuthContext';
+import { AuthProvider } from './src/contexts';
 
 const App = () => {
 	return (

@@ -19,7 +19,6 @@ router.get('/quoteOld', async (req, res) => {
         const quote = await api.getQuote();
         return res.json({quote})
     } catch (err) {
-        console.log(err);
         if (err && err.message && err.message.includes('API')) {
             const error = err.message.split('-');
             res.status(parseInt(error[1])).send(error[2]);
@@ -34,7 +33,6 @@ router.get('/teste', async (req, res) => {
         const photoUrl = await api.searchPhotos('kanye west');
         return res.json({photoUrl});
     } catch (err) {
-        console.log(err);
         if (err && err.message && err.message.includes('API')) {
             const error = err.message.split('-');
             res.status(parseInt(error[1])).send(error[2]);

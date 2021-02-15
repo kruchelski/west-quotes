@@ -1,28 +1,29 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import { Image, Text, View, ActivityIndicator } from 'react-native';
 import styles from './styles';
 import { Logo } from '../../assets';
 import { mainTheme } from '../../constants';
-import { AuthContext } from '../../contexts';
+import { useAuth } from '../../hooks';
 
 const SplashScreen = ({ setLoadingApp }) => {
 
-	const authContext = useContext(AuthContext);
 	const welcomeMessage = 'OMG! Some awesome quotes from Kanye West right into your phone!'
+	const { loadStorageData, errorHandler } = useAuth();
 
 	useEffect(() => {
 		const autoSignInWithStoredToken = async () => {
 			try {
-				await authContext.loadStorageData();
+				await loadStorageData();
 			} catch (err) {
-				authContext.errorHandler(
+			
+				errorHandler(
 					err, 
 					'An unexpected error happened whilte trying to authenticate with stored token'
 				)
 			} finally {
 				setTimeout(() => {
 					setLoadingApp(false);
-				}, 1500);
+				}, 3500);
 			}
 		}
 

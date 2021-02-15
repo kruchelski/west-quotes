@@ -16,8 +16,8 @@ const styles = StyleSheet.create({
 		resizeMode: 'contain',
 	},
 	text: {
-		color: mainTheme.mainColor,
-		fontSize: 24,
+		color: mainTheme.fgColor0,
+		fontSize: 16,
 		textAlign: 'center'
 	}
 });
