@@ -1,32 +1,23 @@
-// Basic imports
-import React from 'react';
-import { View, ActivityIndicator } from 'react-native';
-import { useAuth } from '../contexts/AuthContext';
-
-
-// Navigators imports
+import React, { useState, useContext } from 'react';
 import AuthStackNavigator from './AuthStackNavigator';
-import MainStackNavigator from './MainStackNavigator'
+import MainStackNavigator from './MainStackNavigator';
+import { SplashScreen } from '../screens';
+import { AuthContext } from '../contexts';
 
 const Navigators = () => {
-	const { signed, loading } = useAuth();
+	const authContext = useContext(AuthContext);
+	const [loadingApp, setLoadingApp] = useState(true);
 
-	if (loading) {
-		console.log('Tá carregando')
+	if (loadingApp) {
 		return (
-			<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-				<ActivityIndicator size='large' />
-			</View>
+			<SplashScreen setLoadingApp={setLoadingApp} />
 		)
-	}
-
-
-	if (signed) {
+	} else {
+		if (!!authContext.state.user) {
+			return <AuthStackNavigator />
+		}
 		return <MainStackNavigator />
 	}
-	return (
-		<AuthStackNavigator />
-	);
 }
 
 export default Navigators;

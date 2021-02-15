@@ -1,19 +1,19 @@
-// Basic imports
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-
-// Screens imports
-import RegisterScreen from '../screens/RegisterScreen';
+import { RegisterScreen } from '../screens';
+import { AuthProvider } from '../contexts';
 
 const AuthStack = createStackNavigator();
 
 export default () => {
 	return (
-		<AuthStack.Navigator>
-			<AuthStack.Screen
-				name={ 'LoginStack' }
-				component={ RegisterScreen }
-			/>
-		</AuthStack.Navigator>
+		<AuthProvider>
+			<AuthStack.Navigator>
+				<AuthStack.Screen
+					name={ 'LoginStack' }
+					component={ RegisterScreen }
+				/>
+			</AuthStack.Navigator>
+		</AuthProvider>
 	);
 }

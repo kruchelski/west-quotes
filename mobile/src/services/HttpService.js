@@ -1,9 +1,7 @@
-// Imports
-import * as tokenService from './TokenService';
 import { server } from '../config/RequestConfig';
 import { ENDPOINTS } from '../constants/Requests';
+import { UserService } from './index';
 
-// Configs imports
 import { setDefaultHeaders } from '../config/RequestConfig';
 
 export const makeRequest = async (endpoint, requestBody = null, params = null, retry = null) => {
@@ -67,7 +65,7 @@ export const makeRequest = async (endpoint, requestBody = null, params = null, r
  */
 export const tokenRenewal = async (callback = null, body = null, params = null) => {
 	// Retrieves the refreshToken from the storage
-	const refreshToken = await tokenService.getRefreshToken();
+	const refreshToken = await UserService.getRefreshTokenFromStorage();
 	console.log('Is there a refresh Token??');
 	console.log(refreshToken);
 

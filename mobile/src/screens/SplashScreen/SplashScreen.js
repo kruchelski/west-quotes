@@ -1,9 +1,7 @@
-// Basic imports
 import React, { useContext, useEffect } from 'react';
 import { Text, View, ActivityIndicator, StyleSheet } from 'react-native';
 
-// Contexts imports
-import { AuthContext } from '../contexts/AuthContext';
+import { AuthContext } from '../../contexts/AuthContext';
 
 export default ({ navigation, route }) => {
 
