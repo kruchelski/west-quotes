@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "devStart": "nodemon server.js",
+    "devStartTest": "./auto-migrate.sh && nodemon server.js",
     "debug": "nodemon --inspect server.js"
   },
   "repository": {
