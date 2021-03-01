@@ -1,4 +1,3 @@
-// Basic imports
 import axios from 'axios';
 
 // TODO: Trocar por valores vindos do .env
