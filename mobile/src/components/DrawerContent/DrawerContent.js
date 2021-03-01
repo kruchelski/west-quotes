@@ -15,23 +15,39 @@ const DrawerContent = ({ navigation }) => {
     }
   }
   return (
-    <View 
+    <View
       style={styles.container}
     >
       <View
         style={styles.infoContainer}
       >
-        <Text
-          style={styles.usernameText}
+        <View
+          style={styles.infoContainerHeader}
         >
-          {`@${authState.user.username}`}
-        </Text>
-        
-        <Text
-          style={styles.text}
+          <Text
+            style={styles.usernameText}
+          >
+            {`@${authState.user.username}`}
+          </Text>
+
+          <Text
+            style={styles.text}
+          >
+            {authState.user.email}
+          </Text>
+
+        </View>
+        <View
+          style={styles.buttonContainer}
         >
-          {authState.user.email}
-        </Text>
+          <CustomButton
+            type='outline'
+            title="Go to My Stuff"
+            level='primary'
+            icon='compact-disc'
+            onPress={() => handleLogout()}
+          />
+        </View>
       </View>
       <View
         style={styles.buttonContainer}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Input } from 'react-native-elements';
-import { mainTheme } from '../../../constants';
+import { mainTheme, appFonts } from '../../../constants';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const CustomInput = (props) => {
@@ -30,7 +30,7 @@ const customStyle = {
   input: {
     color: mainTheme.fgColor0,
     fontSize: 14,
-    fontFamily: 'PTSans_400Regular',
+    fontFamily: appFonts.regular,
     marginVertical: 0,
     padding: 0
   },
@@ -39,13 +39,13 @@ const customStyle = {
       color: mainTheme.primary,
       marginBottom: 0,
       fontSize: 14,
-      fontFamily: 'PTSans_400Regular',
+      fontFamily: appFonts.regular,
     },
     secondary: {
       color: mainTheme.secondary,
       marginBottom: 0,
       fontSize: 14,
-      fontFamily: 'PTSans_400Regular',
+      fontFamily: appFonts.regular,
     }
   },
   container: {

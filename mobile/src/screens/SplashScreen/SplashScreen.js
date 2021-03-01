@@ -22,7 +22,7 @@ const SplashScreen = ({ setLoadingApp }) => {
 			} finally {
 				setTimeout(() => {
 					setLoadingApp(false);
-				}, 3500);
+				}, 1500);
 			}
 		}
 

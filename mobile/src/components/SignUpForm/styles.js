@@ -1,16 +1,15 @@
 import { StyleSheet } from 'react-native'
-import { mainTheme } from '../../constants';
+import { appFonts, mainTheme } from '../../constants';
 
 const styles = StyleSheet.create({
   formContainer: {
-    margin: 15,
-    marginTop: 10,
-    padding: 15,
+    marginHorizontal: 15,
+    paddingTop: 10,
+    paddingHorizontal: 5,
     backgroundColor: `${mainTheme.bgColor2}`,
     borderRadius: 10,
     justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 30,
+    alignItems: 'stretch',
   },
   text: {
     color: mainTheme.primaryLight,
@@ -19,7 +18,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   error: {
-    fontFamily: 'PTSans_400Regular',
+    fontFamily: appFonts.regular,
     color: mainTheme.danger,
     fontSize: 12,
     borderWidth: 1,

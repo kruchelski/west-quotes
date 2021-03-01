@@ -37,7 +37,6 @@ export default ({ navigation, route }) => {
 			await signIn(email, password);
 		} catch (err) {
 			authErrorHandler(err, 'An unexpected error happened trying to Sign In');
-		} finally {
 			setLoading(false);
 		}
 	}
@@ -48,7 +47,6 @@ export default ({ navigation, route }) => {
 			await signUp(username, email, password);
 		} catch (err) {
 			authErrorHandler(err, 'An unexpected error happened trying to Sign Up');
-		} finally {
 			setLoading(false);
 		}
 	}

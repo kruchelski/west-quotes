@@ -4,7 +4,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 import { HomeScreen, QuoteScreen } from '../screens';
 import { DrawerContent } from '../components';
 import { QuoteProvider } from '../contexts'
-import { mainTheme } from '../constants';
+import { mainTheme, appFonts } from '../constants';
 
 const MainStack = createStackNavigator();
 const MainDrawer = createDrawerNavigator();
@@ -19,7 +19,7 @@ const mainStack = () => {
 						backgroundColor: mainTheme.bgColor0,
 					},
 					headerTitleStyle: {
-						fontFamily: 'PTSans_400Regular',
+						fontFamily: appFonts.regular,
 						fontSize: 16
 					}
 				}}

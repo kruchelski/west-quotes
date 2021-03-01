@@ -1,13 +1,26 @@
 import React, { createContext, useState } from 'react';
 import { HttpService } from '../services';
-import { ENDPOINTS } from '../constants';
 
 const QuoteContext = createContext();
 
 const quoteContextApi = ( quoteState, setQuoteState ) => {
   
   const getQuote = async () => {
-    // TODO: implementar a lógica
+    try {
+      const quoteResponse = await HttpService.makeRequest('getQuote', null, null, true);
+      if (!quoteResponse || !quoteResponse.data) {
+        throw new Error('Error requesting quote. No data from the server.');
+      }
+
+      setQuoteState((prevState) => {
+        return {
+          ...prevState,
+          ...quoteResponse.data
+        }
+      })
+    } catch (err) {
+      throw err;
+    }
   }
 
   const likeQuote = async (quoteUuid) => {
@@ -42,8 +55,21 @@ const quoteContextApi = ( quoteState, setQuoteState ) => {
 }
 
 const QuoteProvider = ({ children }) => {
-  // TODO: Definir as propriedades do objeto inicial
-  const initialState = {}
+  const initialState = {
+    quote: {
+      quoteBody: {
+        text: null,
+        uuid: null,
+        occurrences: null,
+        likes: null,
+      },
+      love: null,
+      new: true,
+      likers: [],
+    },
+    image: null,
+    imageQuery: null,
+  }
 
   const [quoteState, setQuoteState] = useState(initialState)
   const {
@@ -67,3 +93,22 @@ const QuoteProvider = ({ children }) => {
 }
 
 export { QuoteContext, QuoteProvider };
+
+/**
+ * Object {
+  "image": "https://images.unsplash.com/photo-1544200502-6652e105f865?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwxOTI5ODZ8MHwxfHNlYXJjaHwxOHx8bWUlMjBvZnxlbnwwfHx8&ixlib=rb-1.2.1&q=80&w=1080",
+  "imageQuery": "me of",
+  "quote": Object {
+    "likers": Array [],
+    "love": 0,
+    "new": true,
+    "quoteBody": Object {
+      "likes": 0,
+      "occurrences": 1,
+      "text": "One of my favorite of many things about what the Trump hat represents to me is that people can't tell me what to do because I'm black",
+      "uuid": "6ff811de-953c-4a5c-a0b8-f538d4e0b778",
+    },
+    "userLikes": 0,
+  },
+}
+ */

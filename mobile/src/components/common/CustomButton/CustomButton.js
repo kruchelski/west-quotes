@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'react-native-elements';
-import { mainTheme } from '../../../constants';
+import { mainTheme, appFonts } from '../../../constants';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const CustomButton = (props) => {
@@ -27,40 +27,47 @@ const customStyle = {
     primary: {
       backgroundColor: mainTheme.primary,
       color: mainTheme.colorLight,
-      fontFamily: 'PTSans_400Regular',
-      fontSize:16
+      fontFamily: appFonts.regular,
+      fontSize:16,
+      marginHorizontal: 10,
     },
     secondary: {
       backgroundColor: mainTheme.secondary,
       color: mainTheme.colorLight,
-      fontFamily: 'PTSans_400Regular',
-      fontSize:16
+      fontFamily: appFonts.regular,
+      fontSize:16,
+      marginHorizontal: 10,
     }
   },
   outline: {
     primary: {
       borderColor: mainTheme.primary,
       color: mainTheme.primary,
-      fontFamily: 'PTSans_400Regular',
-      fontSize:16
+      fontFamily: appFonts.regular,
+      fontSize:16,
+      marginHorizontal: 10,
     },
     secondary: {
       borderColor: mainTheme.secondary,
       color: mainTheme.secondary,
-      fontFamily: 'PTSans_400Regular',
-      fontSize:16
+      fontFamily: appFonts.regular,
+      fontFamily: appFonts.regular,
+      fontSize:16,
+      marginHorizontal: 10,
     }
   },
   clear: {
     primary: {
       color: mainTheme.primary,
-      fontFamily: 'PTSans_400Regular',
-      fontSize:16
+      fontFamily: appFonts.regular,
+      fontSize:16,
+      marginHorizontal: 10,
     },
     secondary: {
       color: mainTheme.secondary,
-      fontFamily: 'PTSans_400Regular',
-      fontSize:16
+      fontFamily: appFonts.regular,
+      fontSize:16,
+      marginHorizontal: 10,
     },
   },
   icon: {

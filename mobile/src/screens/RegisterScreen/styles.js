@@ -7,19 +7,19 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     justifyContent: 'flex-start',
     backgroundColor: mainTheme.bgColor0,
+    paddingTop: 30
   },
   logoImageContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 40,
+    margin: 15,
+    marginTop: 0,
   },
   logoImage: {
 		width: 200,
 		height: 100,
 		resizeMode: 'cover',
-    margin: 15,
-    marginBottom: 0,
-    marginTop: 0
+    margin: 0
 	},
 })
 
