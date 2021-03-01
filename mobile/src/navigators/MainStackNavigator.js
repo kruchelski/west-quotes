@@ -14,7 +14,7 @@ const mainStack = () => {
 		<QuoteProvider>
 			<MainStack.Navigator
 				screenOptions={{
-					headerTintColor: mainTheme.mainColor,
+					headerTintColor: mainTheme.primary,
 					headerStyle: {
 						backgroundColor: mainTheme.bgColor0,
 					},

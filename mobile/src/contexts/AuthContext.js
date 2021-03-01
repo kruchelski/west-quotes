@@ -182,7 +182,7 @@ const authContextApi = ( authState, setAuthState ) => {
     }
   }
 
-  const errorHandler = (errorObject, defaultMessage = null) => {
+  const authErrorHandler = (errorObject, defaultMessage = null) => {
 
     setAuthState((prevState) => {
       return {
@@ -201,15 +201,25 @@ const authContextApi = ( authState, setAuthState ) => {
     signIn,
     signUp,
     signOut,
-    errorHandler
+    authErrorHandler
   }
-
 }
 
 const AuthProvider = ({ children }) => {
+  const initialState = {
+    accessToken: null,
+    refreshToken: null, 
+    user: null, 
+    error: null
+  }
 
-  const [authState, setAuthState] = useState({accessToken: null, refreshToken: null, user: null, error: null})
-  const { loadStorageData, signIn, signUp, signOut, errorHandler } = authContextApi(authState, setAuthState);
+  const [authState, setAuthState] = useState({ ...initialState })
+  const { 
+    loadStorageData, 
+    signIn, 
+    signUp, 
+    signOut,
+    authErrorHandler } = authContextApi(authState, setAuthState);
 
   return (
     <AuthContext.Provider value={{
@@ -218,7 +228,7 @@ const AuthProvider = ({ children }) => {
       signIn,
       signUp,
       signOut,
-      errorHandler
+      authErrorHandler
     }}>
       { children}
     </AuthContext.Provider>

@@ -11,6 +11,7 @@ const Navigators = () => {
 	if (loadingApp) {
 		return <SplashScreen setLoadingApp={setLoadingApp} />
 	}
+	
 	if (!authState.user) {
 		return <AuthStackNavigator />
 	}

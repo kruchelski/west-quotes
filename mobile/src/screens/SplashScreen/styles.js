@@ -14,11 +14,6 @@ const styles = StyleSheet.create({
 		width: 300,
 		height: 150,
 		resizeMode: 'contain',
-	},
-	text: {
-		color: mainTheme.fgColor0,
-		fontSize: 16,
-		textAlign: 'center'
 	}
 });
 

@@ -1,0 +1,56 @@
+import React from 'react';
+import { View, Text } from 'react-native';
+import { CustomButton } from '../common';
+import { useAuth } from '../../hooks';
+import styles from './styles'
+
+const DrawerContent = ({ navigation }) => {
+  const { authState, signOut, authErrorHandler } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await signOut();
+    } catch (err) {
+      authErrorHandler(err, 'An unexpected error happened trying to Sign Out');
+    }
+  }
+  return (
+    <View 
+      style={styles.container}
+    >
+      <View
+        style={styles.infoContainer}
+      >
+        <Text
+          style={styles.usernameText}
+        >
+          {`@${authState.user.username}`}
+        </Text>
+        
+        <Text
+          style={styles.text}
+        >
+          {authState.user.email}
+        </Text>
+      </View>
+      <View
+        style={styles.buttonContainer}
+      >
+        <CustomButton
+          type='outline'
+          title="Logout"
+          level='secondary'
+          icon='sign-out-alt'
+          onPress={() => handleLogout()}
+        />
+      </View>
+      {
+        authState.error &&
+        <Text>Ocorreu um erro: ${authState.error}</Text>
+      }
+    </View>
+
+  )
+}
+
+export default DrawerContent;

@@ -51,7 +51,7 @@ const QuoteProvider = ({ children }) => {
     likeQuote,
     dislikeQuote,
     quoteErrorHandler
-  } = authContextApi(quoteState, setQuoteState);
+  } = quoteContextApi(quoteState, setQuoteState);
 
   return (
     <QuoteContext.Provider value={{

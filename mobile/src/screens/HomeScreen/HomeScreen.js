@@ -14,6 +14,8 @@ export default ({ navigation, route }) => {
 	const handleGetQuote = async () => {
 		try {
 			const response = await HttpService.makeRequest('getQuote', null, null, true);
+			console.log('Quote from home screen');
+			console.log(response?.data);
 		} catch (err) {
 			// TODO: Create an error handler
 			console.log('[HomeScreen - handleGetQuote] ERROR!');

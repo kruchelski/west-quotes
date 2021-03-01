@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
-import { Image, Text, View, ActivityIndicator } from 'react-native';
+import { Image, View, ActivityIndicator } from 'react-native';
 import styles from './styles';
-import { Logo } from '../../assets';
+import { logo } from '../../assets';
 import { mainTheme } from '../../constants';
 import { useAuth } from '../../hooks';
 
 const SplashScreen = ({ setLoadingApp }) => {
 
-	const welcomeMessage = 'OMG! Some awesome quotes from Kanye West right into your phone!'
 	const { loadStorageData, errorHandler } = useAuth();
 
 	useEffect(() => {
@@ -32,11 +31,8 @@ const SplashScreen = ({ setLoadingApp }) => {
 
 	return (
 		<View style={ styles.container }>
-			<Image source={ Logo } style={ styles.logoImage } />
-			<ActivityIndicator size="large" color={ mainTheme.mainColor } />
-			<Text style={ styles.text }>
-				{ welcomeMessage }
-			</Text>
+			<Image source={ logo } style={ styles.logoImage } />
+			<ActivityIndicator size="large" color={ mainTheme.primary } />
 		</View>
 	)
 }

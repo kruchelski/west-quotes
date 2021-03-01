@@ -10,6 +10,7 @@ export default () => {
 			<AuthStack.Screen
 				name={'LoginStack'}
 				component={RegisterScreen}
+				options={{ header: () => null }}
 			/>
 		</AuthStack.Navigator>
 	);
