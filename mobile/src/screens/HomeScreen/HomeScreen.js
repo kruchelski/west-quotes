@@ -23,7 +23,6 @@ export default ({ navigation, route }) => {
 			}
 		}
 
-
 		if (!!!quoteState?.quote?.quoteBody?.uuid) {
 			requestQuote();
 		}

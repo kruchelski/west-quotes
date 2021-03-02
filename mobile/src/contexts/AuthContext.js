@@ -190,7 +190,7 @@ const authContextApi = ( authState, setAuthState ) => {
         error: errorObject?.error ||
         errorObject?.message ||
         defaultMessage ||
-        'An unexpected error happened',
+        'An unexpected authentication error happened',
       }
     })
 

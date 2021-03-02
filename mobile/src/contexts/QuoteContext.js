@@ -33,7 +33,7 @@ const quoteContextApi = ( quoteState, setQuoteState ) => {
 
   const quoteErrorHandler = (errorObject, defaultMessage = null) => {
 
-    setAuthState((prevState) => {
+    setQuoteState((prevState) => {
       return {
         ...prevState,
         error: errorObject?.error ||
