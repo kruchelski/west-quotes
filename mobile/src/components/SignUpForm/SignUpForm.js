@@ -10,6 +10,11 @@ const SignUpForm = ({ signUpHanlder, changeFormHandler, loading, authError }) =>
 
   return (
     <View style={styles.formContainer}>
+       <Text
+        style={styles.formTitle}
+      >
+        SignUp
+      </Text>
       <CustomInput
         level='primary'
         icon='user'
@@ -66,7 +71,7 @@ const SignUpForm = ({ signUpHanlder, changeFormHandler, loading, authError }) =>
       </Text>
       <CustomButton
         type='clear'
-        title="SignIn then!"
+        title="Login with existing account"
         level='secondary'
         icon={null}
         onPress={() => { changeFormHandler() }}

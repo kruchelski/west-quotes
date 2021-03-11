@@ -11,9 +11,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'stretch',
   },
+  formTitle: {
+    color: mainTheme.primary,
+    textAlign: 'center',
+    fontSize: 14,
+    fontFamily: appFonts.bold,
+  },
   text: {
     color: mainTheme.primaryLight,
-    marginTop: 15,
+    marginTop: 20,
     marginBottom: 0,
     textAlign: 'center'
   },

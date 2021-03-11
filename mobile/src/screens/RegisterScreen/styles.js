@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     justifyContent: 'flex-start',
     backgroundColor: mainTheme.bgColor0,
-    paddingTop: 30
+    paddingTop: 25
   },
   logoImageContainer: {
     alignItems: 'center',

@@ -9,6 +9,11 @@ const SignInForm = ({ signInHanlder, changeFormHandler, loading, authError }) =>
 
   return (
     <View style={styles.formContainer}>
+      <Text
+        style={styles.formTitle}
+      >
+        Login
+      </Text>
       <CustomInput
         level='primary'
         icon='envelope'
@@ -51,11 +56,11 @@ const SignInForm = ({ signInHanlder, changeFormHandler, loading, authError }) =>
       <Text
         style={styles.text}
       >
-        Want to create a new account?
+        Don't have an account?
       </Text>
       <CustomButton
         type='clear'
-        title="SignUp then!"
+        title="Create new account!"
         level='secondary'
         icon={null}
         onPress={() => { changeFormHandler() }}

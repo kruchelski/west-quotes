@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { Image, View, ActivityIndicator } from 'react-native';
+import { Image, View } from 'react-native';
+import { LoadingIndicator } from '../../components';
 import styles from './styles';
 import { logo } from '../../assets';
 import { mainTheme } from '../../constants';
@@ -29,10 +30,25 @@ const SplashScreen = ({ setLoadingApp }) => {
 		autoSignInWithStoredToken();
 	}, [])
 
+
+	const loadingMessageRandomizer = () => {
+    const preQuotes = [
+      `Loading app`,
+      `Replacing a flat tire of the app`,
+      `Checking the fabric of the space-time continuum`,
+      `Contacting Kanye West directly`,
+			`Sharing data with the FBI`,
+			`Wooba looba dub dub`,
+			`01010000 01101111 01101100 01100101 01101110 01110100 01100001`
+    ]
+    const randomIndex = Math.floor(Math.random() * (preQuotes.length - 0.1));
+    return preQuotes[randomIndex];
+  }
+
 	return (
 		<View style={ styles.container }>
 			<Image source={ logo } style={ styles.logoImage } />
-			<ActivityIndicator size="large" color={ mainTheme.primary } />
+			<LoadingIndicator loadingMessage={loadingMessageRandomizer()} />
 		</View>
 	)
 }
