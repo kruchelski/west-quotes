@@ -1,5 +1,5 @@
-import CustomButton from './CustomButton/CustomButton';
-import CustomInput from './CustomInput/CustomInput';
+import CustomButton from './CustomButton';
+import CustomInput from './CustomInput';
 
 
 export { CustomButton, CustomInput };

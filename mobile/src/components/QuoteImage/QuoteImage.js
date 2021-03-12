@@ -7,7 +7,11 @@ const QuoteImage = ({ quoteImage }) => {
     <View
       style={styles.imageContainer}
     >
-      <Image source={{ uri: quoteImage }} style={styles.image} resizeMode='contain' />
+      <Image 
+        source={{ uri: quoteImage }} 
+        style={styles.image} 
+        resizeMode='contain' 
+      />
     </View>
   );
 }

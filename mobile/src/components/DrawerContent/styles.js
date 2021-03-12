@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: 60,
     marginBottom: 20,
-    backgroundColor: mainTheme.secondaryLight,
+    backgroundColor: mainTheme.primaryLight,
   },
   text: {
     fontFamily: appFonts.regular,

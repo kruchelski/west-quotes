@@ -1,6 +1,6 @@
 import React from 'react';
 import { Input } from 'react-native-elements';
-import { mainTheme, appFonts } from '../../../constants';
+import { mainTheme, appFonts } from '../../constants';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const CustomInput = (props) => {

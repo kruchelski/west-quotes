@@ -3,6 +3,7 @@ server/node_modules
 
 # Environment configurations
 server/.env
+mobile/.env
 
 # VS Code configurations
 .vscode

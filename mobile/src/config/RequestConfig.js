@@ -1,12 +1,13 @@
 import axios from 'axios';
+import Constants from 'expo-constants';
 
-// TODO: Trocar por valores vindos do .env
+const { API_URL } = Constants.manifest.extra;
 
 /**
  * Creates an instance to make requests
  */
 export const server = axios.create({
-    baseURL: 'http://192.168.18.36:3002',
+    baseURL: API_URL,
 });
 
 /**

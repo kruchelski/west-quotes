@@ -3,7 +3,6 @@ import { mainTheme, appFonts } from '../../constants';
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
 		backgroundColor: mainTheme.bgColor0,
 		alignItems: 'stretch',
 		justifyContent: 'flex-start',

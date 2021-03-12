@@ -38,7 +38,8 @@ export const makeRequest = async (endpoint, requestBody = null, params = null, r
 		// Makes the request
 		return await client( url, body, headers);
 	} catch (err) {
-
+		console.log('[HTTP SERVICE ERROR] ', endpoint);
+		console.log(JSON.stringify(err));
 		if (err?.response?.status === 403 && retry) {
 			return await tokenRenewal(endpoint, requestBody, params);
 		} else {

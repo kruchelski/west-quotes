@@ -109,6 +109,7 @@ const calculateQuoteMetadata = async (quoteRaw, userUuid, transaction) => {
 
     // Get other users that liked the quote
     newData.likers = await User.findAll({
+        attributes: ['uuid', 'username', 'email'],
         include: {
             model: UserQuote,
             where: {
@@ -121,8 +122,6 @@ const calculateQuoteMetadata = async (quoteRaw, userUuid, transaction) => {
         },
         limit: 10
     }, { transaction })
-
-
 
     // Return object
     return newData;

@@ -27,6 +27,7 @@ const mainStack = () => {
 				<MainStack.Screen
 					name={'HomeScreen'}
 					component={HomeScreen}
+					options={{ title: 'West Quotes' }}
 				/>
 				<MainStack.Screen
 					name={'QuoteScreen'}
