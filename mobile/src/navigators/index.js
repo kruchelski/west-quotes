@@ -20,7 +20,7 @@ const Navigators = () => {
         <AuthNavigator />
       </Otherwise>
     </Choose>
-  )
-}
+  );
+};
 
 export default Navigators;

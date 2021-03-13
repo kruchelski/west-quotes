@@ -1,8 +1,9 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { HomeScreen, QuoteScreen } from '../../screens';
-import { QuoteProvider } from '../../contexts'
-import { mainTheme, appFonts } from '../../constants';
+import { HomeScreen, QuoteScreen } from '../../../screens';
+import MainTabsNavigator from './MainTabsNavigator';
+import { QuoteProvider } from '../../../contexts';
+import { mainTheme, appFonts } from '../../../constants';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -30,9 +31,13 @@ const MainStackNavigator = () => {
 					name="QuoteScreen"
 					component={QuoteScreen}
 				/>
+				<Screen
+					name="UserStuffScreen"
+					component={MainTabsNavigator}
+				/>
 			</Navigator>
 		</QuoteProvider>
 	);
-}
+};
 
-export default MainStackNavigator
+export default MainStackNavigator;
