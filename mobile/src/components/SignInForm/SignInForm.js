@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import { CustomButton, CustomInput } from '../common';
 import styles from './styles';
 
-const SignInForm = ({ signInHanlder, changeFormHandler, loading, authError }) => {
+const SignInForm = ({ signInHandler, changeFormHandler, loading, authError }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -51,7 +51,7 @@ const SignInForm = ({ signInHanlder, changeFormHandler, loading, authError }) =>
         title="Login"
         level='primary'
         icon='sign-in-alt'
-        onPress={() => { signInHanlder(email, password) }}
+        onPress={() => { signInHandler(email, password) }}
       />
       <Text
         style={styles.text}

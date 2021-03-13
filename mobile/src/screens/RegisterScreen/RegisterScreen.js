@@ -66,7 +66,7 @@ export default ({ navigation, route }) => {
 			{
 				isSignIn &&
 				<SignInForm
-					signInHanlder={handleSignIn}
+					signInHandler={handleSignIn}
 					changeFormHandler={handleFormChange}
 					loading={loading}
 					authError={authState.error}
