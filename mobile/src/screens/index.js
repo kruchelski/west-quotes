@@ -1,11 +1,4 @@
-import HomeScreen from './HomeScreen/HomeScreen';
-import SplashScreen from './SplashScreen/SplashScreen';
-import QuoteScreen from './QuoteScreen/QuoteScreen';
-import RegisterScreen from './RegisterScreen/RegisterScreen';
-
-export {
-  HomeScreen,
-  SplashScreen,
-  QuoteScreen,
-  RegisterScreen
-}
+export { default as HomeScreen } from './HomeScreen';
+export { default as SplashScreen } from './SplashScreen';
+export { default as QuoteScreen } from './QuoteScreen';
+export { default as RegisterScreen } from './RegisterScreen';

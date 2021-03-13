@@ -1,23 +1,10 @@
-import SignInForm from './SignInForm/SignInForm';
-import SignUpForm from './SignUpForm/SignUpForm';
-import DrawerContent from './DrawerContent/DrawerContent';
-import PreQuote from './PreQuote/PreQuote';
-import Quote from './Quote/Quote';
-import QuoteControl from './QuoteControl/QuoteControl';
-import QuoteImage from './QuoteImage/QuoteImage';
-import QuoteLove from './QuoteLove/QuoteLove';
-import QuoteStats from './QuoteStats/QuoteStats';
-import LoadingIndicator from './LoadingIndicator/LoadingIndicator';
-
-export {
-  SignInForm,
-  SignUpForm,
-  DrawerContent,
-  PreQuote,
-  Quote,
-  QuoteControl,
-  QuoteImage,
-  QuoteLove,
-  QuoteStats,
-  LoadingIndicator
-}
+export { default as SignInForm } from './SignInForm';
+export { default as SignUpForm } from './SignUpForm';
+export { default as DrawerContent } from './DrawerContent';
+export { default as PreQuote } from './PreQuote';
+export { default as Quote } from './Quote';
+export { default as QuoteControl } from './QuoteControl';
+export { default as QuoteImage } from './QuoteImage';
+export { default as QuoteLove } from './QuoteLove';
+export { default as QuoteStats } from './QuoteStats';
+export { default as LoadingIndicator } from './LoadingIndicator';
