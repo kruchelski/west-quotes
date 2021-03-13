@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     paddingHorizontal: 5,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'transparent',
     marginTop: -25,
@@ -15,12 +15,12 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     marginTop: -25,
-    marginRight: 'auto',
     marginLeft: 5,
     paddingHorizontal: 10,
     paddingVertical: 5,
-    backgroundColor: mainTheme.secondary,
-    borderRadius: 20
+    backgroundColor: mainTheme.primaryLight,
+    borderRadius: 20,
+    
   },
   text: {
     fontFamily: appFonts.regular,

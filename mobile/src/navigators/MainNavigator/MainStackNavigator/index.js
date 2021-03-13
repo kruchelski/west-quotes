@@ -30,10 +30,12 @@ const MainStackNavigator = () => {
 				<Screen
 					name="QuoteScreen"
 					component={QuoteScreen}
+					options={{ title: 'Quote detail' }}
 				/>
 				<Screen
 					name="UserStuffScreen"
 					component={MainTabsNavigator}
+					options={{ title: 'My Stuff' }}
 				/>
 			</Navigator>
 		</QuoteProvider>

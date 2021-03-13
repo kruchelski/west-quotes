@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { QuotesListScreen, UserDetailsScreen } from '../../../screens';
+import { mainTheme } from '../../../constants';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -10,7 +11,7 @@ const MainTabsNavigator = () => {
       tabBarOptions={{
         style: {
           elevation: 10,
-          height: 64,
+          height: 48,
         },
         tabStyle: {
           flexDirection: 'row',
@@ -21,17 +22,19 @@ const MainTabsNavigator = () => {
           marginLeft: 24,
           fontSize: 13,
         },
+        activeTintColor: mainTheme.primary,
+        inactiveTintColor: mainTheme.fgColor2
       }}
     >
       <Screen
         name="QuotesListScreen"
         component={QuotesListScreen}
-        options={{ tabBarLabel: 'Quotes You Interacted With' }}
+        options={{ tabBarLabel: 'Quotes Liked' }}
       />
       <Screen
         name="UserDetailsScreen"
         component={UserDetailsScreen}
-        options={{ tabBarLabel: 'Your Data' }}
+        options={{ tabBarLabel: 'User Data' }}
       />
     </Navigator>
   );

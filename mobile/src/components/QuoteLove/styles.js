@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginLeft: 20,
     borderWidth: 1,
-    borderColor: `${mainTheme.primaryLight}77`,
+    borderColor: `${mainTheme.secondaryLight}77`,
     borderRadius: 4
   },
   bar: {
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     height: '100%',
     top: 0,
     left: 0,
-    backgroundColor: `${mainTheme.primaryLight}77`,
+    backgroundColor: `${mainTheme.secondaryLight}77`,
     borderRadius: 2
   },
   icon: {

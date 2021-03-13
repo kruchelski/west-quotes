@@ -7,10 +7,10 @@ import {
 	QuoteImage,
 	QuoteLove,
 	QuoteStats,
+	UserList,
 	LoadingIndicator
 } from '../../components';
 import { useQuote } from '../../hooks';
-import { mainTheme } from '../../constants'
 import styles from './styles';
 
 export default ({ navigation, route }) => {
@@ -63,9 +63,12 @@ export default ({ navigation, route }) => {
 				<PreQuote />
 				<Quote quoteText={quote.quoteBody.text} />
 				<QuoteControl 
-					quoteLiked={quoteState.quoteLiked}
+					actionHappened={quoteState.quoteLiked}
 					loading={loadingLikeQuote}
-					onPressCallback={handleQuoteLike} 
+					onPressCallback={handleQuoteLike}
+					actionHappenedMsg='Liked!'
+					severity='primary'
+					icon='like1'
 				/>
 				<View
 					style={styles.infoContainer}
@@ -74,9 +77,13 @@ export default ({ navigation, route }) => {
 					<QuoteLove quoteLove={quote.love} />
 					<QuoteStats 
 						occurrences={quote.quoteBody.occurrences} 
-						likes={quote.quoteBody.likes} 
+						likes={quote.quoteBody.likes}
+						userLikes={quote.userLikes}
 					/>
-
+					<UserList
+						likers={quote.likers}
+						newQuote={quote.new}
+					/>
 				</View>
 			</ScrollView>
 		);

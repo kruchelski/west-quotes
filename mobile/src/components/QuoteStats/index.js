@@ -4,7 +4,7 @@ import { mainTheme } from '../../constants';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import styles from './styles';
 
-const QuoteStats = ({ occurrences, likes }) => {
+const QuoteStats = ({ occurrences, likes, userLikes }) => {
 
   return (
     <View
@@ -13,7 +13,7 @@ const QuoteStats = ({ occurrences, likes }) => {
       <View
         style={styles.itemContainer}
       >
-        <Icon 
+        <Icon
           style={styles.icon}
           name='chart-line'
           size={16}
@@ -22,7 +22,7 @@ const QuoteStats = ({ occurrences, likes }) => {
         <Text
           style={styles.textKey}
         >
-          occurrences: 
+          occurrences:
         </Text>
         <Text
           style={styles.textValue}
@@ -33,7 +33,7 @@ const QuoteStats = ({ occurrences, likes }) => {
       <View
         style={styles.itemContainer}
       >
-        <Icon 
+        <Icon
           style={styles.icon}
           name='hand-holding-heart'
           size={16}
@@ -42,13 +42,35 @@ const QuoteStats = ({ occurrences, likes }) => {
         <Text
           style={styles.textKey}
         >
-          likes: 
+          likes:
         </Text>
         <Text
           style={styles.textValue}
         >
           {likes}
         </Text>
+      </View>
+      <View
+        style={styles.itemContainer}
+      >
+        <Icon
+          style={styles.icon}
+          name={`${userLikes ? 'grin-hearts' : 'heart-broken'}`}
+          size={16}
+          color={mainTheme.colorLight}
+        />
+        <Text
+          style={styles.textKey}
+        >
+          {`you ${userLikes ? '' : 'never'} liked this quote`}
+        </Text>
+        <Text
+          style={styles.textValue}
+        >
+          {userLikes ? `${userLikes} ${userLikes > 1 ? 'times!' : 'time'}` : ':('}
+        </Text>
+
+
       </View>
     </View>
   );

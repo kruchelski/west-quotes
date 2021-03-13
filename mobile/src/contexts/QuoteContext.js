@@ -31,11 +31,38 @@ const quoteContextApi = ( quoteState, setQuoteState ) => {
 
   const likeQuote = async (quoteUuid) => {
     try {
-      await HttpService.makeRequest('likeQuote', null, quoteUuid, true);
+      await HttpService.makeRequest(
+        'likeQuote',
+        null,
+        quoteUuid,
+        true
+      );
+      const quoteDetails = await HttpService.makeRequest(
+        'getQuoteDetails',
+        null,
+        quoteUuid,
+        true
+      );
+      const {
+        love: newLove,
+        userLikes: newUserLikes,
+        quoteBody: newQuoteBody
+      } = quoteDetails.data;
+
       setQuoteState(prevState => {
         return {
           ...prevState,
-          quoteLiked: true
+          quoteLiked: true,
+          quote: {
+            ...prevState.quote,
+            love: newLove,
+            userLikes: newUserLikes,
+            quoteBody: {
+              ...prevState.quote.quoteBody,
+              likes: newQuoteBody.likes,
+              occurrences: newQuoteBody.occurrences
+            }
+          }
         }
       })
     } catch (err) {

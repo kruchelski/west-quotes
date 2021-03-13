@@ -29,11 +29,12 @@ const getQuoteMetadata = async (text, userUuid) => {
             // Generates metadata
             quoteData = await generateNewQuoteMetadata(text, transaction);
         } else {
+            // Update ocurrence times
+            quoteRaw.occurrences += 1;
+            
             // Retrieve metadata
             quoteData = await calculateQuoteMetadata(quoteRaw, userUuid, transaction);
 
-            // Update ocurrence times
-            quoteRaw.occurrences += 1;
             await quoteRaw.save({ transaction });
         }
 

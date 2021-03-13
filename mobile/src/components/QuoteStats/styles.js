@@ -5,10 +5,10 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'flex-start',
-    backgroundColor: mainTheme.secondaryLight,
+    backgroundColor: mainTheme.primaryLight,
     marginTop: 10,
     marginBottom: 20,
-    padding: 10,
+    padding: 8,
     marginHorizontal: 0,
     borderRadius: 6
   },
@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   icon: {
-    marginRight: 0,
-    flex: 3,
+    marginRight: 10,
+    flex: 1,
   },
   textKey: {
     fontFamily: appFonts.bold,
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     fontFamily: appFonts.regular,
     fontSize: 16,
     color: mainTheme.colorLight,
-    flex: 10,
+    flex: 4,
   }
 });
 

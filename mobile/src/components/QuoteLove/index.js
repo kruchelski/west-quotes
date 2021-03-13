@@ -11,7 +11,7 @@ const QuoteLove = ({ quoteLove }) => {
       style={
         {
           ...styles.container,
-          borderColor: quoteLove ? `${mainTheme.primaryLight}77` : `${mainTheme.fgColor2}77`
+          borderColor: quoteLove ? `${mainTheme.secondaryLight}77` : `${mainTheme.fgColor2}77`
         }
       }
     >
@@ -22,14 +22,14 @@ const QuoteLove = ({ quoteLove }) => {
         style={styles.icon}
         name='heart'
         size={50}
-        color={quoteLove ? mainTheme.primaryLight : mainTheme.fgColor2}
+        color={quoteLove ? mainTheme.secondaryLight : mainTheme.fgColor2}
 
       />
       <Text
         style={
           {
             ...styles.text,
-            color: quoteLove ? mainTheme.primaryLight : mainTheme.fgColor2 
+            color: quoteLove ? mainTheme.secondaryLight : mainTheme.fgColor2 
           }
         }
       >

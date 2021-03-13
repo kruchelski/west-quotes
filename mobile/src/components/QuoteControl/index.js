@@ -5,37 +5,61 @@ import { mainTheme } from '../../constants';
 import styles from './styles';
 
 const QuoteControl = ({
-  quoteLiked,
+  actionHappened,
   loading,
-  onPressCallback
+  onPressCallback,
+  severity,
+  actionHappenedMsg,
+  icon
 }) => {
+
+  const getColor = () => {
+    switch (severity) {
+      case 'primary':
+        return mainTheme.primaryLight;
+      case 'secondary':
+        return mainTheme.secondary;
+      case 'danger':
+        return mainTheme.danger
+      default:
+        return mainTheme.fgColor0
+    }
+  }
 
   return (
     <View
-      style={styles.container}
+      style={
+        {
+          ...styles.container,
+          height: actionHappened ? 66 : 'auto'
+        }
+      }
     >
       {
-        quoteLiked &&
+        actionHappened &&
         <View
           style={styles.textContainer}
         >
           <Text
             style={styles.text}
           >
-            quote liked!
+            {actionHappenedMsg}
           </Text>
-      </View>
+        </View>
 
       }
-      <Icon
-        raised={true}
-        name='like1'
-        type='antdesign'
-        color={mainTheme.secondaryLight}
-        reverse={true}
-        disabled={quoteLiked || loading}
-        onPress={() => onPressCallback()}
-      />
+      {
+        !actionHappened &&
+        <Icon
+          raised={true}
+          name={icon}
+          type='antdesign'
+          color={getColor()}
+          reverse={true}
+          disabled={actionHappened || loading}
+          onPress={() => onPressCallback()}
+        />
+      }
     </View>
   );
 }
