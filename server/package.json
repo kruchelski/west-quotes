@@ -4,6 +4,7 @@
   "description": "This is an application to consume the kanye.rest API and Twitter API",
   "main": "server.js",
   "scripts": {
+    "postinstall": "node -e \"require('fs').existsSync('.env') || require('fs').copyFileSync('.env.example', '.env')\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "devStart": "nodemon server.js",
     "devStartTest": "./auto-migrate.sh && nodemon server.js",

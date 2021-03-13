@@ -6,6 +6,7 @@
   "author": "Cassiano Kruchelski Vidal",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
+    "postinstall": "node -e \"require('fs').existsSync('.env') || require('fs').copyFileSync('.env.example', '.env')\"",
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
