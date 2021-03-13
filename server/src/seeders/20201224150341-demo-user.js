@@ -1,4 +1,4 @@
-'use strict';
+const bcrypt = require('bcrypt');
 
 /**
  * This seed will insert a new user in the database and generates the UUID
@@ -8,15 +8,15 @@
 const { User } = require('../models');
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    return await User.create({
+  async up() {
+    return User.create({
       username: 'testUsername',
       email: 'testUsername@test.com',
-      password: '123456'
+      password: await bcrypt.hash('123456', 10)
     })
   },
 
-  down: async (queryInterface, Sequelize) => {
+  down() {
     /**
      * Add commands to revert seed here.
      *
