@@ -34,7 +34,7 @@ The requirements of this project envolves:
 
 The application is divided in two parts: the mobile app and the back end (API). To get Kanye's quotes the application uses the [Kanye.REST API](https://kanye.rest/) and to get an Image it uses the [Unsplash API](https://unsplash.com/developers). In the app, the users will be able to like quotes and see info about it, like how much loved is the quote or the users that liked it. The access to the two third party APIs is done through the back end; that means the mobile application send a request for a quote to the back end, which request the quote and image to the third party APIs, then get some metadata about that quote, build a nice and fluffy json object and send it back to the mobile application (or to an web application in the future, maybe...).
 In the application, when the user logs in, a random a quote from Kanye West will be displayed along with an image that is queried with some words from the quote. The user is able to Like the quote and see some data about it, like number of occurrences of the quote, how much the quote is loved and other people that liked.
-Swiping the screen from left to right the user has access to the drawer menu, which contains the basic info about the logged user and buttons to navigate to User's stuff screen and to Logout. In the _My Stuff_ screen, the user has two tabs available:
+Swiping the screen from left to right the user has access to the drawer menu, which contains the basic info about the logged user and buttons to navigate to My Stuff screen and to Logout. In the _My Stuff_ screen, the user has two tabs available:
 - Quotes liked, where the user can see a list of quotes liked and touch in any of the quote to see some details about.
 - User data, where the user can alter it's profile data, like username or email, and delete it's account.
 
@@ -77,7 +77,8 @@ To run nice and soft it's needed three things:
 #### Firts things first: The application directory structure!
 As you can see, this application has two main folders:
 - mobile   
-- server
+- server   
+
 It's recommended to have two terminal open, each one handling one of the two main parts of the application (one for the mobile and the other for the server). This means that the root folder for the mobile is inside the mobile folder and (as you probably guessed) the root folder for the server is in the server folder. So, for example, the ```.env``` file for the mobile application must be inside in ```./mobile/``` folder and the ```.env``` file for the server is placed in ```./server/``` folder.
 
 #### About the database
@@ -88,9 +89,9 @@ It's recommended to have two terminal open, each one handling one of the two mai
 
 #### Starting the server (backend)
 - Check the **About the database** section and make sure the database is OK.
-- Check the ```.env.example``` file in the root of the server. This file has instructions for correctly filling in the data and configuring the ```.env``` file for use by the application. Basically create a copy of the file in the same folder, rename it to only ```.env``` (just remove the ```.example``` and other suffix that can appear by coping and pasting the file) and put the info needed in the file (the info includes database name, user, host, access token secret and etc...).
+- Environmental Variables - Check the ```.env.example``` file in the root of the server. This file has instructions for correctly filling in the data and configuring the ```.env``` file for use by the application. Basically create a copy of the file in the same folder, rename it to only ```.env``` (just remove the ```.example``` and other suffix that can appear by coping and pasting the file) and put the info needed in the file (the info includes database name, user, host, access token secret and etc...).
 - Install the dependencies of the application by running ```npm install```.
-- An super important thing: To consume data from the Unsplash [Unsplash API](https://unsplash.com/developers) you need to create an account as a developer to get the **API KEY**.
+- An super important thing: To consume data from the [Unsplash API](https://unsplash.com/developers) you need to create an account as a developer to get the **API KEY**.
 - After all the setup, ou need to run the **migrations** to create the tables and, if you want, run the **seeders** to fill some data. Also you will have to decide if you want to start the server with [nodemon](https://nodemon.io/) or not (Nodemon simply monitors the server for any changes and, if it detects, will automatically restart the server). To do all these things, there are some sweet scripts in the ```package.json``` file and you can run it by entering the command ```npm run <script name>```. The main scripts are:
    
 - ```start``` - Just runs the application
@@ -114,7 +115,7 @@ After that the application will be available for requests in localhost and the *
 
 #### Starting the mobile app
 - Make sure you have the **database** and **server** running.
-- Check the ```.env.example``` file in the root of the server. This file has instructions for correctly filling in the data and configuring the ```.env``` file for use by the application. Basically create a copy of the file in the same folder, rename it to only ```.env``` (just remove the ```.example``` and other suffix that can appear by coping and pasting the file) and put the info needed in the file (the only info needed so far is the backend URL that may vary according with the device you will run the application).
+- Environmental Variables - Check the ```.env.example``` file in the root of the mobile. This file has instructions for correctly filling in the data and configuring the ```.env``` file for use by the application. Basically create a copy of the file in the same folder, rename it to only ```.env``` (just remove the ```.example``` and other suffix that can appear by coping and pasting the file) and put the info needed in the file (the only info needed so far is the backend URL that may vary according with the device you will run the application).
 - Install the dependencies of the application by running ```npm install```.
 - Then simple run ```expo start``` and follow instructions to run the app in an emulator or physical device that you want.
 
@@ -129,7 +130,7 @@ The routes are segregated in three main resources:
 
 Each of these resources have some endpoints and http specific request methods that is described below:
 
-> The routes that have an 🔒 are routes that you need to be authenticated to access (basically send a Bearer token in the Headers)
+> The routes that have an 🔒 are routes that you need to be authenticated to access (basically send a valid Bearer token)
 #### Main routes
 ```
 GET / 🔒
@@ -259,7 +260,7 @@ Fig 6 - Editing user's data
 
 Fig 7 - Logout
 
-![Logout](./images/07-Logout.gif)
+![Logout](./images/07-logout.gif)
 
 Fig 8 - Deleting account
 
