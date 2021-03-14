@@ -34,7 +34,8 @@ export default StyleSheet.create({
     borderRadius: 6,
     borderColor: mainTheme.danger,
     padding: 5,
-    marginHorizontal: 5,
-    marginBottom: 5,
+    marginHorizontal: 10,
+    marginTop: 10,
+    marginBottom: 15,
   },
 });

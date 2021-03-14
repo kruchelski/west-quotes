@@ -13,29 +13,49 @@ const UserDetailsScreen = () => {
   const [newEmail, setNewEmail] = useState(authState.user.email);
   const [newPassword, setNewPassword] = useState('');
   const [error, setError] = useState(null);
+  const [updateDataTry, setUpdateDataTry] = useState(false);
 
-  const checkErrorsInForm = () => {
-    const errors = [];
+  const validateInput = (inputType, inputValue, errors) => {
+		const emailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+		switch (inputType) {
+			case 'username':
+				if (!inputValue) {
+					errors.push('Problem with username')
+				}
+				break;
+			case 'email':
+				if (!inputValue || !inputValue.match(emailRegex)) {
+					errors.push('Problem with email');
+				}
+				break
+			case 'password': {
+				if (!inputValue || !inputValue.length >= 4) {
+					errors.push('Problem with password');
+				}
+				break;
+			}
+		}
+	}
 
-    if (!newUsername) {
-      errors.push('Blank username');
-    }
-    if (!newEmail) {
-      errors.push('Blank email');
-    }
-    if (!newPassword) {
-      errors.push('Blank password');
-    }
+	const validator = (inputs) => {
+		let errors = [];
 
-    return errors.length
-      ? errors.join('\n')
-      : '';
-  };
+		for (const key in inputs) {
+			validateInput(key, inputs[key], errors);
+		}
+		return errors.join('\n');
+	}
 
   const handleSubmitEdit = async () => {
-    const msg = checkErrorsInForm();
-    if (msg) {
-      setError(msg);
+    setUpdateDataTry(true);
+    setError(null);
+    const error = validator({
+      username: newUsername,
+      email: newEmail,
+      password: newPassword
+    })
+    if (error) {
+      setError(error);
       return;
     }
     setLoadingEditUser(true);
@@ -46,6 +66,7 @@ const UserDetailsScreen = () => {
         newPassword,
       );
       setLoadingEditUser(false);
+      setUpdateDataTry(false);
     } catch (err) {
       const msg = err?.response?.data
         || err?.message
@@ -68,24 +89,41 @@ const UserDetailsScreen = () => {
     }
   };
 
-  const getErrorMessage = (inputType) => {
-    switch (inputType) {
-      case 'username':
-        return !newUsername
-          ? 'Username must not be blank'
-          : '';
-      case 'email':
-        return !newEmail
-          ? 'Email must not be blank'
-          : '';
-      case 'password':
-        return !newPassword
-          ? 'Password must not be blank'
-          : '';
-      default:
-        return null;
+  const getErrorMsg = (inputType) => {
+    const emailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+    let errors = [];
+    if (!updateDataTry) {
+      return '';
     }
-  };
+    switch(inputType) {
+      case 'username': 
+        if (!newUsername) {
+          errors.push('Username must not be blank');
+        }
+        break;
+      case 'email':
+        if (!newEmail) {
+          errors.push('Email must not be blank');
+        };
+        if (!newEmail.match(emailRegex)) {
+          errors.push('Email is invalid');
+        }
+        break;
+      case 'password': {
+        if (!newPassword) {
+          errors.push('Password must not be blank');
+        };
+        if (newPassword.length < 4) {
+          errors.push('Password must have at least 4 characters')
+        }
+        break;
+      }
+      default:
+        errors = [];
+    }
+
+    return errors.join('\n');
+  }
 
   return (
     <KeyboardAvoidingView
@@ -118,7 +156,7 @@ const UserDetailsScreen = () => {
           autoCapitalize='none'
           autoCorrect={false}
           onChangeText={(text) => setNewUsername(text)}
-          errorMessage={getErrorMessage('username')}
+          errorMessage={getErrorMsg('username')}
           errorStyle={{
             color: mainTheme.danger,
             fontFamily: appFonts.regularItalic,
@@ -133,7 +171,7 @@ const UserDetailsScreen = () => {
           autoCapitalize='none'
           autoCorrect={false}
           onChangeText={(text) => setNewEmail(text)}
-          errorMessage={getErrorMessage('email')}
+          errorMessage={getErrorMsg('email')}
           errorStyle={{
             color: mainTheme.danger,
             fontFamily: appFonts.regularItalic,
@@ -149,7 +187,7 @@ const UserDetailsScreen = () => {
           autoCorrect={false}
           secureTextEntry={true}
           onChangeText={(text) => setNewPassword(text)}
-          errorMessage={getErrorMessage('password')}
+          errorMessage={getErrorMsg('password')}
           errorStyle={{
             color: mainTheme.danger,
             fontFamily: appFonts.regularItalic,

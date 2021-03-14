@@ -7,6 +7,7 @@ export default StyleSheet.create({
     justifyContent: 'flex-start',
     padding: 10,
     backgroundColor: mainTheme.bgColor1,
+    height: '100%'
   },
 
   title: {

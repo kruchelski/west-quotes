@@ -218,6 +218,15 @@ const authContextApi = (authState, setAuthState) => {
     });
   };
 
+  const clearErrorState = () => {
+    setAuthState(prevState => {
+      return {
+        ...prevState,
+        error: null
+      }
+    })
+  }
+
   return {
     loadStorageData,
     signIn,
@@ -226,6 +235,7 @@ const authContextApi = (authState, setAuthState) => {
     editUser,
     removeAccount,
     authErrorHandler,
+    clearErrorState
   };
 };
 
@@ -244,7 +254,9 @@ const AuthProvider = ({ children }) => {
     signOut,
     editUser,
     removeAccount,
-    authErrorHandler } = authContextApi(authState, setAuthState);
+    authErrorHandler,
+    clearErrorState
+  } = authContextApi(authState, setAuthState);
 
   return (
     <AuthContext.Provider
@@ -257,6 +269,7 @@ const AuthProvider = ({ children }) => {
         editUser,
         removeAccount,
         authErrorHandler,
+        clearErrorState
       }}
     >
       { children}
