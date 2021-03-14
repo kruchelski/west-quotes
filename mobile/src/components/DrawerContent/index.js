@@ -10,6 +10,7 @@ const DrawerContent = ({ navigation }) => {
   const handleLogout = async () => {
     try {
       await signOut();
+      navigation.closeDrawer();
     } catch (error) {
       authErrorHandler(error, 'An unexpected error happened trying to Sign Out');
     }

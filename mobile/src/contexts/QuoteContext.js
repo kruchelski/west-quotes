@@ -14,10 +14,6 @@ const quoteContextApi = ( quoteState, setQuoteState ) => {
 
       quoteResponse.data.quoteLiked = false;
 
-      console.log('-====QUOTE====-')
-      console.log(quoteResponse.data)
-
-
       setQuoteState((prevState) => {
         return {
           ...prevState,

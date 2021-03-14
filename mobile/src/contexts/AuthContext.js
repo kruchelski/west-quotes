@@ -4,8 +4,8 @@ import { setDefaultHeaders, removeDefaultHeader } from '../config/RequestConfig'
 
 const AuthContext = createContext();
 
-const authContextApi = ( authState, setAuthState ) => {
-  
+const authContextApi = (authState, setAuthState) => {
+
   const loadStorageData = async () => {
     try {
       // Retrieves the user and the refreshToken from the localStorage
@@ -56,7 +56,7 @@ const authContextApi = ( authState, setAuthState ) => {
 
           // If there's no accessToken in the response
           throw new Error('Failed to get a new access token');
-          
+
         }
       }
 
@@ -182,15 +182,78 @@ const authContextApi = ( authState, setAuthState ) => {
     }
   }
 
+  const editUser = async (username, email, password) => {
+    try {
+
+      const requestEditUserBody = {
+        username: username.trim(),
+        email: email.trim(),
+        password,
+      }
+
+      // Makes the request to update user
+      await HttpService.makeRequest('editUser', requestEditUserBody, null, true);
+
+      // Creates new user info
+      const newUserInfo = {
+        username: username || authState.user.username,
+        email: email || authState.user.email
+      }
+
+      // Updates authstate
+      setAuthState(prevState => {
+        return {
+          ...prevState,
+          user: {
+            ...prevState.user,
+            username: newUserInfo.username,
+            email: newUserInfo.email
+          }
+        }
+      })
+    } catch (err) {
+
+      throw err;
+
+    }
+  }
+
+  const removeAccount = async () => {
+    try {
+      await HttpService.makeRequest(
+        'deleteUser',
+        null,
+        null,
+        true
+      )
+      await StorageService.clearStorage();
+      removeDefaultHeader('Authorization');
+      setAuthState((prevState) => {
+        return {
+          ...prevState,
+          refreshToken: null,
+          user: null,
+          accessToken: null,
+          error: null,
+        }
+      })
+
+    } catch (err) {
+
+      throw err;
+
+    }
+  }
+
   const authErrorHandler = (errorObject, defaultMessage = null) => {
 
     setAuthState((prevState) => {
       return {
         ...prevState,
         error: errorObject?.error ||
-        errorObject?.message ||
-        defaultMessage ||
-        'An unexpected authentication error happened',
+          errorObject?.message ||
+          defaultMessage ||
+          'An unexpected authentication error happened',
       }
     })
 
@@ -201,6 +264,8 @@ const authContextApi = ( authState, setAuthState ) => {
     signIn,
     signUp,
     signOut,
+    editUser,
+    removeAccount,
     authErrorHandler
   }
 }
@@ -208,17 +273,19 @@ const authContextApi = ( authState, setAuthState ) => {
 const AuthProvider = ({ children }) => {
   const initialState = {
     accessToken: null,
-    refreshToken: null, 
-    user: null, 
+    refreshToken: null,
+    user: null,
     error: null
   }
 
   const [authState, setAuthState] = useState({ ...initialState })
-  const { 
-    loadStorageData, 
-    signIn, 
-    signUp, 
+  const {
+    loadStorageData,
+    signIn,
+    signUp,
     signOut,
+    editUser,
+    removeAccount,
     authErrorHandler } = authContextApi(authState, setAuthState);
 
   return (
@@ -228,6 +295,8 @@ const AuthProvider = ({ children }) => {
       signIn,
       signUp,
       signOut,
+      editUser,
+      removeAccount,
       authErrorHandler
     }}>
       { children}

@@ -34,7 +34,7 @@ const SplashScreen = ({ setLoadingApp }) => {
 	const loadingMessageRandomizer = () => {
     const preQuotes = [
       `Loading app`,
-      `Replacing a flat tire of the app`,
+      `Replacing a flat tire in app`,
       `Checking the fabric of the space-time continuum`,
       `Contacting Kanye West directly`,
 			`Sharing data with the FBI`,

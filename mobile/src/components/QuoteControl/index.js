@@ -38,7 +38,12 @@ const QuoteControl = ({
       {
         actionHappened &&
         <View
-          style={styles.textContainer}
+          style={
+            {
+              ...styles.textContainer,
+              backgroundColor: getColor()
+            }
+          }
         >
           <Text
             style={styles.text}

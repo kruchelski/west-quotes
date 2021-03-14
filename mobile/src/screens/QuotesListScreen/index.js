@@ -18,7 +18,6 @@ const QuotesListScreen = ({ navigation }) => {
 
   useFocusEffect(
     useCallback(() => {
-      console.log('Loading list')
       const getQuotesList = async () => {
         setLoadingQuotes(true);
         try {

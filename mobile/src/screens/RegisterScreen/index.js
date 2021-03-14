@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, Keyboard } from 'react-native';
+import { View, Image, Keyboard, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { useAuth } from '../../hooks';
 import { SignInForm, SignUpForm } from '../../components';
 import { logo } from '../../assets';
@@ -56,7 +56,12 @@ export default ({ navigation, route }) => {
 	}
 
 	return (
-		<View style={styles.container}>
+		<KeyboardAvoidingView
+			style={styles.container}
+			behavior={(Platform.OS === 'ios') ? "padding" : null} enabled
+			keyboardVerticalOffset={Platform.select({ ios: 60, android: 60 })}
+		>
+		<ScrollView>
 			{
 				showLogo &&
 				<View style={styles.logoImageContainer}>
@@ -81,6 +86,7 @@ export default ({ navigation, route }) => {
 					authError={authState.error}
 				/>
 			}
-		</View >
+		</ScrollView >
+		</KeyboardAvoidingView>
 	);
 }

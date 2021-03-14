@@ -10,11 +10,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     padding: 10,
     borderWidth: 1,
-    borderColor: mainTheme.primary,
+    borderColor: `${mainTheme.fgColor3}77`,
     borderRadius: 6,
     backgroundColor: mainTheme.bgColor0,
     shadowColor: '#44444455',
-    shadowOpacity: 1,
+    shadowOpacity: 0.7,
     shadowOffset: {width: 0, height: 1}
   },
   iconLike: {
@@ -23,8 +23,9 @@ const styles = StyleSheet.create({
   quoteText: {
     fontFamily: appFonts.regular,
     fontSize: 14,
-    color: mainTheme.fgColor0,
-    flex: 20
+    color: mainTheme.primaryDark,
+    flex: 20,
+    paddingRight: 5
   },
   iconText: {
     fontFamily: appFonts.regular,
