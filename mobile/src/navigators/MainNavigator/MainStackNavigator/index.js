@@ -8,38 +8,38 @@ import { mainTheme, appFonts } from '../../../constants';
 const { Navigator, Screen } = createStackNavigator();
 
 const MainStackNavigator = () => {
-	return (
-		<QuoteProvider>
-			<Navigator
-				screenOptions={{
-					headerTintColor: mainTheme.primary,
-					headerStyle: {
-						backgroundColor: mainTheme.bgColor0,
-					},
-					headerTitleStyle: {
-						fontFamily: appFonts.regular,
-						fontSize: 16
-					}
-				}}
-			>
-				<Screen
-					name="HomeScreen"
-					component={HomeScreen}
-					options={{ title: 'West Quotes' }}
-				/>
-				<Screen
-					name="QuoteScreen"
-					component={QuoteScreen}
-					options={{ title: 'Quote detail' }}
-				/>
-				<Screen
-					name="UserStuffScreen"
-					component={MainTabsNavigator}
-					options={{ title: 'My Stuff' }}
-				/>
-			</Navigator>
-		</QuoteProvider>
-	);
+  return (
+    <QuoteProvider>
+      <Navigator
+        screenOptions={{
+          headerTintColor: mainTheme.primary,
+          headerStyle: {
+            backgroundColor: mainTheme.bgColor0,
+          },
+          headerTitleStyle: {
+            fontFamily: appFonts.regular,
+            fontSize: 16,
+          },
+        }}
+      >
+        <Screen
+          name="HomeScreen"
+          component={HomeScreen}
+          options={{ title: 'West Quotes' }}
+        />
+        <Screen
+          name="QuoteScreen"
+          component={QuoteScreen}
+          options={{ title: 'Quote detail' }}
+        />
+        <Screen
+          name="UserStuffScreen"
+          component={MainTabsNavigator}
+          options={{ title: 'My Stuff' }}
+        />
+      </Navigator>
+    </QuoteProvider>
+  );
 };
 
 export default MainStackNavigator;

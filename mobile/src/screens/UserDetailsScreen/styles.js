@@ -7,8 +7,9 @@ export default StyleSheet.create({
     justifyContent: 'flex-start',
     padding: 10,
     backgroundColor: mainTheme.bgColor1,
-    flex: 1
+    flex: 1,
   },
+
   title: {
     fontFamily: appFonts.bold,
     fontWeight: 'bold',
@@ -17,12 +18,14 @@ export default StyleSheet.create({
     textAlign: 'center',
     marginVertical: 10,
   },
+
   errorTitle: {
     textAlign: 'center',
     fontFamily: appFonts.bold,
     fontWeight: 'bold',
-    color: mainTheme.danger
+    color: mainTheme.danger,
   },
+
   error: {
     fontFamily: appFonts.regular,
     fontSize: 14,
@@ -34,5 +37,5 @@ export default StyleSheet.create({
     borderColor: mainTheme.danger,
     borderRadius: 6,
     marginBottom: 10,
-  }
+  },
 });

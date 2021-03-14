@@ -23,7 +23,7 @@ const MainTabsNavigator = () => {
           fontSize: 13,
         },
         activeTintColor: mainTheme.primary,
-        inactiveTintColor: mainTheme.fgColor2
+        inactiveTintColor: mainTheme.fgColor2,
       }}
     >
       <Screen

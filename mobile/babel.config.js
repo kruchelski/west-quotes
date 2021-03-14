@@ -3,7 +3,7 @@ module.exports = (api) => {
 
   return {
     presets: [
-      'babel-preset-expo'
+      'babel-preset-expo',
     ],
     plugins: [
       'babel-plugin-jsx-control-statements',

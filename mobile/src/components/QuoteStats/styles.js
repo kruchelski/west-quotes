@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { mainTheme, appFonts } from '../../constants';
 
-const styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'flex-start',
@@ -10,19 +10,22 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     padding: 8,
     marginHorizontal: 0,
-    borderRadius: 6
+    borderRadius: 6,
   },
+
   itemContainer: {
     flexDirection: 'row',
     padding: 5,
     marginVertical: 3,
     justifyContent: 'flex-start',
-    alignItems: 'center'
+    alignItems: 'center',
   },
+
   icon: {
     marginRight: 10,
     flex: 1,
   },
+
   textKey: {
     fontFamily: appFonts.bold,
     fontSize: 16,
@@ -30,12 +33,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     flex: 10,
   },
+
   textValue: {
     fontFamily: appFonts.regular,
     fontSize: 16,
     color: mainTheme.colorLight,
     flex: 4,
-  }
+  },
 });
-
-export default styles;

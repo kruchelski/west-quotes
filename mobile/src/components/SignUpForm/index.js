@@ -3,18 +3,17 @@ import { View, Text } from 'react-native';
 import { CustomButton, CustomInput } from '../common';
 import styles from './styles';
 
-const SignUpForm = ({ signUpHanlder, changeFormHandler, loading, authError }) => {
+const SignUpForm = ({ signUpHandler, changeFormHandler, loading, authError }) => {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   return (
     <View style={styles.formContainer}>
-       <Text
-        style={styles.formTitle}
-      >
+       <Text style={styles.formTitle}>
         SignUp
       </Text>
+
       <CustomInput
         level='primary'
         icon='user'
@@ -46,27 +45,25 @@ const SignUpForm = ({ signUpHanlder, changeFormHandler, loading, authError }) =>
         secureTextEntry={true}
         onChangeText={(text) => setPassword(text)}
       />
-      {
-        !!authError &&
+
+      <If condition={authError}>
         <View>
-          <Text
-            style={styles.error}
-          >
+          <Text style={styles.error}>
             {authError}
           </Text>
         </View>
-      }
+      </If>
+
       <CustomButton
         loading={loading}
         type='solid'
         title="Create account"
         level='primary'
         icon='user-plus'
-        onPress={() => { signUpHanlder(username, email, password) }}
+        onPress={() => { signUpHandler(username, email, password); }}
       />
-      <Text
-        style={styles.text}
-      >
+
+      <Text style={styles.text}>
         Already have an account?
       </Text>
       <CustomButton
@@ -74,11 +71,10 @@ const SignUpForm = ({ signUpHanlder, changeFormHandler, loading, authError }) =>
         title="Login with existing account"
         level='secondary'
         icon={null}
-        onPress={() => { changeFormHandler() }}
+        onPress={() => { changeFormHandler(); }}
       />
-
     </View>
-  )
-}
+  );
+};
 
-export default SignUpForm
+export default SignUpForm;

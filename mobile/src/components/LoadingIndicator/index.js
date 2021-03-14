@@ -5,20 +5,19 @@ import styles from './styles';
 
 const LoadingIndicator = ({ loadingMessage }) => {
   return (
-    <View
-      style={styles.loadingContainer}
-    >
-      {
-        !!loadingMessage &&
-        <Text
-          style={styles.loadingMessage}
-        >
+    <View style={styles.loadingContainer}>
+      <If condition={loadingMessage}>
+        <Text style={styles.loadingMessage}>
           {loadingMessage}
-      </Text>
-      }
-      <ActivityIndicator size="large" color={mainTheme.primary} />
+        </Text>
+      </If>
+
+      <ActivityIndicator
+        size="large"
+        color={mainTheme.primary}
+      />
     </View>
-  )
-}
+  );
+};
 
 export default LoadingIndicator;

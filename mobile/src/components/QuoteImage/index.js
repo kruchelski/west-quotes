@@ -4,16 +4,14 @@ import styles from './styles';
 
 const QuoteImage = ({ quoteImage }) => {
   return (
-    <View
-      style={styles.imageContainer}
-    >
-      <Image 
-        source={{ uri: quoteImage }} 
-        style={styles.image} 
-        resizeMode='contain' 
+    <View style={styles.imageContainer}>
+      <Image
+        source={{ uri: quoteImage }}
+        style={styles.image}
+        resizeMode='contain'
       />
     </View>
   );
-}
+};
 
 export default QuoteImage;

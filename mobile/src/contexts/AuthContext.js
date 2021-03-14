@@ -5,7 +5,6 @@ import { setDefaultHeaders, removeDefaultHeader } from '../config/RequestConfig'
 const AuthContext = createContext();
 
 const authContextApi = (authState, setAuthState) => {
-
   const loadStorageData = async () => {
     try {
       // Retrieves the user and the refreshToken from the localStorage
@@ -13,25 +12,19 @@ const authContextApi = (authState, setAuthState) => {
       const storageRefreshToken = await UserService.getRefreshTokenFromStorage();
 
       if (!storageRefreshToken) {
-
         try {
-          await signOut()
-
+          await signOut();
         } catch (err) {
           throw err;
         }
-
       } else {
-
         // In case there's a refresh token stored, tries to get a new access token
         const response = await HttpService.tokenRenewal(null, false, false);
 
         // Checks the content of response
         if (response?.data?.accessToken) {
-
           // Sets the user
           if (response?.data?.user || storageUser) {
-
             // Updates the storage with the user
             await UserService.setUserInStorage(response.data.user);
 
@@ -41,57 +34,48 @@ const authContextApi = (authState, setAuthState) => {
                 refreshToken: storageRefreshToken,
                 user: response.data.user || storageUser,
                 accessToken: response.data.accessToken,
-                error: null
-              }
-            })
-
+                error: null,
+              };
+            });
           } else {
-
             // If no user is found, set an error state
             throw new Error('Failed to retrieve user from database and local storage');
-
           }
-
         } else {
-
           // If there's no accessToken in the response
           throw new Error('Failed to get a new access token');
-
         }
       }
-
     } catch (err) {
-
       throw err;
-
     }
-  }
+  };
 
   const signIn = async (email, password) => {
     try {
-
       const authRequestBody = {
         email: email.trim(),
-        password
-      }
+        password,
+      };
 
       // Makes request to login
       const response = await HttpService.makeRequest('signIn', authRequestBody, null, false);
 
       // If the response is missing some data then set as error
-      if (!response || !response.data || !response.data.user || !response.data.accessToken || !response.data.refreshToken) {
-
+      if (!response
+          || !response.data
+          || !response.data.user
+          || !response.data.accessToken
+          || !response.data.refreshToken
+      ) {
         throw new Error('Failed to get user authentication data from the server');
-
       } else {
-
         // Saves the user and the refresh token in the async storage
         await UserService.setUserInStorage(response.data.user);
         await UserService.setRefreshTokenInStorage(response.data.refreshToken);
 
         // Sets the default header
         setDefaultHeaders('Authorization', response.data.accessToken);
-
 
         setAuthState((prevState) => {
           return {
@@ -100,45 +84,36 @@ const authContextApi = (authState, setAuthState) => {
             user: response.data.user,
             accessToken: response.data.accessToken,
             error: null,
-          }
-        })
+          };
+        });
       }
-
     } catch (err) {
-
       throw err;
-
     }
-  }
+  };
 
   const signUp = async (username, email, password) => {
     try {
-
       const requestSignUpBody = {
         username: username.trim(),
         email: email.trim(),
         password,
-      }
+      };
 
       // Makes the request to register an user
       const response = await HttpService.makeRequest('signUp', requestSignUpBody, null, false);
 
       // If there's missing data in the response set user as null and se an error
       if (!response || !response.data || !response.data.uuid) {
-
-        throw new Error('Failed to get user register data from the server')
-
+        throw new Error('Failed to get user register data from the server');
       } else {
-
         // Calls the signIn function
         await signIn(email, password);
       }
     } catch (err) {
-
       throw err;
-
     }
-  }
+  };
 
   const signOut = async () => {
     try {
@@ -152,8 +127,8 @@ const authContextApi = (authState, setAuthState) => {
             user: null,
             accessToken: null,
             error: null,
-          }
-        })
+          };
+        });
         return;
       }
 
@@ -172,24 +147,20 @@ const authContextApi = (authState, setAuthState) => {
           user: null,
           accessToken: null,
           error: null,
-        }
-      })
-
+        };
+      });
     } catch (err) {
-
       throw err;
-
     }
-  }
+  };
 
   const editUser = async (username, email, password) => {
     try {
-
       const requestEditUserBody = {
         username: username.trim(),
         email: email.trim(),
         password,
-      }
+      };
 
       // Makes the request to update user
       await HttpService.makeRequest('editUser', requestEditUserBody, null, true);
@@ -197,35 +168,28 @@ const authContextApi = (authState, setAuthState) => {
       // Creates new user info
       const newUserInfo = {
         username: username || authState.user.username,
-        email: email || authState.user.email
-      }
+        email: email || authState.user.email,
+      };
 
       // Updates authstate
-      setAuthState(prevState => {
+      setAuthState((prevState) => {
         return {
           ...prevState,
           user: {
             ...prevState.user,
             username: newUserInfo.username,
-            email: newUserInfo.email
-          }
-        }
-      })
+            email: newUserInfo.email,
+          },
+        };
+      });
     } catch (err) {
-
       throw err;
-
     }
-  }
+  };
 
   const removeAccount = async () => {
     try {
-      await HttpService.makeRequest(
-        'deleteUser',
-        null,
-        null,
-        true
-      )
+      await HttpService.makeRequest('deleteUser', null, null, true);
       await StorageService.clearStorage();
       removeDefaultHeader('Authorization');
       setAuthState((prevState) => {
@@ -235,29 +199,24 @@ const authContextApi = (authState, setAuthState) => {
           user: null,
           accessToken: null,
           error: null,
-        }
-      })
-
+        };
+      });
     } catch (err) {
-
       throw err;
-
     }
-  }
+  };
 
   const authErrorHandler = (errorObject, defaultMessage = null) => {
-
     setAuthState((prevState) => {
       return {
         ...prevState,
-        error: errorObject?.error ||
-          errorObject?.message ||
-          defaultMessage ||
-          'An unexpected authentication error happened',
-      }
-    })
-
-  }
+        error: errorObject?.error
+          || errorObject?.message
+          || defaultMessage
+          || 'An unexpected authentication error happened',
+      };
+    });
+  };
 
   return {
     loadStorageData,
@@ -266,21 +225,20 @@ const authContextApi = (authState, setAuthState) => {
     signOut,
     editUser,
     removeAccount,
-    authErrorHandler
-  }
-}
+    authErrorHandler,
+  };
+};
 
 const AuthProvider = ({ children }) => {
   const initialState = {
     accessToken: null,
     refreshToken: null,
     user: null,
-    error: null
-  }
+    error: null,
+  };
 
-  const [authState, setAuthState] = useState({ ...initialState })
-  const {
-    loadStorageData,
+  const [authState, setAuthState] = useState({ ...initialState });
+  const { loadStorageData,
     signIn,
     signUp,
     signOut,
@@ -289,19 +247,21 @@ const AuthProvider = ({ children }) => {
     authErrorHandler } = authContextApi(authState, setAuthState);
 
   return (
-    <AuthContext.Provider value={{
-      authState,
-      loadStorageData,
-      signIn,
-      signUp,
-      signOut,
-      editUser,
-      removeAccount,
-      authErrorHandler
-    }}>
+    <AuthContext.Provider
+      value={{
+        authState,
+        loadStorageData,
+        signIn,
+        signUp,
+        signOut,
+        editUser,
+        removeAccount,
+        authErrorHandler,
+      }}
+    >
       { children}
     </AuthContext.Provider>
-  )
-}
+  );
+};
 
 export { AuthContext, AuthProvider };

@@ -1,4 +1,3 @@
-import useAuth from './useAuth'
-import useQuote from './useQuote';
 
-export { useAuth, useQuote };
+export { default as useAuth } from './useAuth';
+export { default as useQuote } from './useQuote';

@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { mainTheme, appFonts } from '../../constants';
 
-const styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     borderWidth: 1,
     borderColor: `${mainTheme.secondaryLight}77`,
-    borderRadius: 4
+    borderRadius: 4,
   },
   bar: {
     position: 'absolute',
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     backgroundColor: `${mainTheme.secondaryLight}77`,
-    borderRadius: 2
+    borderRadius: 2,
   },
   icon: {
     position: 'absolute',
@@ -31,8 +31,6 @@ const styles = StyleSheet.create({
     color: mainTheme.primaryDark,
     marginVertical: 5,
     marginHorizontal: 10,
-    fontSize: 16
-  }
+    fontSize: 16,
+  },
 });
-
-export default styles;

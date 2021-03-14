@@ -1,8 +1,10 @@
 import { useContext } from 'react';
 import { QuoteContext } from '../contexts';
 
-export default () => {
+const useQuote = () => {
   const context = useContext(QuoteContext);
-  
+
   return context;
-}
+};
+
+export default useQuote;

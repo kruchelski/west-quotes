@@ -10,9 +10,8 @@ const QuoteControl = ({
   onPressCallback,
   severity,
   actionHappenedMsg,
-  icon
+  icon,
 }) => {
-
   const getColor = () => {
     switch (severity) {
       case 'primary':
@@ -20,53 +19,35 @@ const QuoteControl = ({
       case 'secondary':
         return mainTheme.secondary;
       case 'danger':
-        return mainTheme.danger
+        return mainTheme.danger;
       default:
-        return mainTheme.fgColor0
+        return mainTheme.fgColor0;
     }
-  }
+  };
 
   return (
-    <View
-      style={
-        {
-          ...styles.container,
-          height: actionHappened ? 66 : 'auto'
-        }
-      }
-    >
-      {
-        actionHappened &&
-        <View
-          style={
-            {
-              ...styles.textContainer,
-              backgroundColor: getColor()
-            }
-          }
-        >
-          <Text
-            style={styles.text}
-          >
+    <View style={{ ...styles.container, height: actionHappened ? 66 : 'auto' }}>
+      <If condition={actionHappened}>
+        <View style={{ ...styles.textContainer, backgroundColor: getColor() }}>
+          <Text style={styles.text}>
             {actionHappenedMsg}
           </Text>
         </View>
+      </If>
 
-      }
-      {
-        !actionHappened &&
+      <If condition={!actionHappened}>
         <Icon
           raised={true}
           name={icon}
-          type='antdesign'
+          type="antdesign"
           color={getColor()}
           reverse={true}
           disabled={actionHappened || loading}
           onPress={() => onPressCallback()}
         />
-      }
+      </If>
     </View>
   );
-}
+};
 
 export default QuoteControl;

@@ -1,10 +1,9 @@
 import React, { createContext, useState } from 'react';
 import { HttpService } from '../services';
 
-const QuoteContext = createContext();
+export const QuoteContext = createContext();
 
-const quoteContextApi = ( quoteState, setQuoteState ) => {
-  
+const quoteContextApi = (quoteState, setQuoteState) => {
   const getQuote = async () => {
     try {
       const quoteResponse = await HttpService.makeRequest('getQuote', null, null, true);
@@ -17,13 +16,13 @@ const quoteContextApi = ( quoteState, setQuoteState ) => {
       setQuoteState((prevState) => {
         return {
           ...prevState,
-          ...quoteResponse.data
-        }
-      })
+          ...quoteResponse.data,
+        };
+      });
     } catch (err) {
       throw err;
     }
-  }
+  };
 
   const likeQuote = async (quoteUuid) => {
     try {
@@ -31,21 +30,21 @@ const quoteContextApi = ( quoteState, setQuoteState ) => {
         'likeQuote',
         null,
         quoteUuid,
-        true
+        true,
       );
       const quoteDetails = await HttpService.makeRequest(
         'getQuoteDetails',
         null,
         quoteUuid,
-        true
+        true,
       );
       const {
         love: newLove,
         userLikes: newUserLikes,
-        quoteBody: newQuoteBody
+        quoteBody: newQuoteBody,
       } = quoteDetails.data;
 
-      setQuoteState(prevState => {
+      setQuoteState((prevState) => {
         return {
           ...prevState,
           quoteLiked: true,
@@ -56,44 +55,41 @@ const quoteContextApi = ( quoteState, setQuoteState ) => {
             quoteBody: {
               ...prevState.quote.quoteBody,
               likes: newQuoteBody.likes,
-              occurrences: newQuoteBody.occurrences
-            }
-          }
-        }
-      })
+              occurrences: newQuoteBody.occurrences,
+            },
+          },
+        };
+      });
     } catch (err) {
       throw err;
     }
-  }
+  };
 
   const dislikeQuote = async (quoteUuid) => {
     // TODO: implementar a lógica
-  }
+  };
 
   const quoteErrorHandler = (errorObject, defaultMessage = null) => {
-
     setQuoteState((prevState) => {
       return {
         ...prevState,
-        error: errorObject?.error ||
-        errorObject?.message ||
-        defaultMessage ||
-        'An unexpected error happened with quote data',
-      }
-    })
-
-  }
+        error: errorObject?.error
+        || errorObject?.message
+        || defaultMessage
+        || 'An unexpected error happened with quote data',
+      };
+    });
+  };
 
   return {
     getQuote,
     likeQuote,
     dislikeQuote,
-    quoteErrorHandler
-  }
+    quoteErrorHandler,
+  };
+};
 
-}
-
-const QuoteProvider = ({ children }) => {
+export const QuoteProvider = ({ children }) => {
   const initialState = {
     quote: {
       quoteBody: {
@@ -108,14 +104,14 @@ const QuoteProvider = ({ children }) => {
     },
     image: null,
     imageQuery: null,
-  }
+  };
 
-  const [quoteState, setQuoteState] = useState(initialState)
+  const [quoteState, setQuoteState] = useState(initialState);
   const {
     getQuote,
     likeQuote,
     dislikeQuote,
-    quoteErrorHandler
+    quoteErrorHandler,
   } = quoteContextApi(quoteState, setQuoteState);
 
   return (
@@ -124,11 +120,10 @@ const QuoteProvider = ({ children }) => {
       getQuote,
       likeQuote,
       dislikeQuote,
-      quoteErrorHandler
-    }}>
+      quoteErrorHandler,
+    }}
+    >
       { children}
     </QuoteContext.Provider>
-  )
-}
-
-export { QuoteContext, QuoteProvider };
+  );
+};

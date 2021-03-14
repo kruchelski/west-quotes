@@ -6,8 +6,9 @@ export default StyleSheet.create({
     alignItems: 'stretch',
     justifyContent: 'flex-start',
     padding: 10,
-    backgroundColor: mainTheme.bgColor1
+    backgroundColor: mainTheme.bgColor1,
   },
+
   title: {
     fontFamily: appFonts.bold,
     fontWeight: 'bold',
@@ -24,6 +25,6 @@ export default StyleSheet.create({
     padding: 10,
     borderWidth: 1,
     borderColor: mainTheme.danger,
-    borderRadius: 6
-  }
+    borderRadius: 6,
+  },
 });

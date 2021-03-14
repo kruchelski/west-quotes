@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { mainTheme, appFonts } from '../../constants';
 
-const styles = StyleSheet.create({
+export default StyleSheet.create({
   preQuoteText: {
     fontFamily: appFonts.regularItalic,
     fontSize: 12,
@@ -9,7 +9,5 @@ const styles = StyleSheet.create({
     color: mainTheme.fgColor2,
     marginTop: 5,
     marginBottom: 10,
-  }
+  },
 });
-
-export default styles;

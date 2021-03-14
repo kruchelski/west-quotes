@@ -5,8 +5,8 @@ import { SplashScreen } from '../screens';
 import { useAuth } from '../hooks';
 
 const Navigators = () => {
-	const { authState } = useAuth();
-	const [loadingApp, setLoadingApp] = useState(true);
+  const { authState } = useAuth();
+  const [loadingApp, setLoadingApp] = useState(true);
 
   return (
     <Choose>

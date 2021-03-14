@@ -9,11 +9,10 @@ const SignInForm = ({ signInHandler, changeFormHandler, loading, authError }) =>
 
   return (
     <View style={styles.formContainer}>
-      <Text
-        style={styles.formTitle}
-      >
+      <Text style={styles.formTitle}>
         Login
       </Text>
+
       <CustomInput
         level='primary'
         icon='envelope'
@@ -35,27 +34,25 @@ const SignInForm = ({ signInHandler, changeFormHandler, loading, authError }) =>
         secureTextEntry={true}
         onChangeText={(text) => setPassword(text)}
       />
-      {
-        !!authError &&
+
+      <If condition={authError}>
         <View>
-          <Text
-            style={styles.error}
-          >
+          <Text style={styles.error}>
             {authError}
           </Text>
         </View>
-      }
+      </If>
+
       <CustomButton
         loading={loading}
         type='solid'
         title="Login"
         level='primary'
         icon='sign-in-alt'
-        onPress={() => { signInHandler(email, password) }}
+        onPress={() => { signInHandler(email, password); }}
       />
-      <Text
-        style={styles.text}
-      >
+
+      <Text style={styles.text}>
         Don't have an account?
       </Text>
       <CustomButton
@@ -63,11 +60,10 @@ const SignInForm = ({ signInHandler, changeFormHandler, loading, authError }) =>
         title="Create new account!"
         level='secondary'
         icon={null}
-        onPress={() => { changeFormHandler() }}
+        onPress={() => { changeFormHandler(); }}
       />
-
     </View>
-  )
-}
+  );
+};
 
-export default SignInForm
+export default SignInForm;

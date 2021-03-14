@@ -7,14 +7,14 @@ const { Navigator, Screen } = createDrawerNavigator();
 
 const MainNavigator = () => {
   return (
-		<Navigator
-			drawerContent={(props) => <DrawerContent {...props} />}
-		>
-			<Screen
-				name="Main"
-				component={MainStackNavigator}
-			/>
-		</Navigator>
+    <Navigator
+      drawerContent={(props) => <DrawerContent {...props} />}
+    >
+      <Screen
+        name="Main"
+        component={MainStackNavigator}
+      />
+    </Navigator>
   );
 };
 

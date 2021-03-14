@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { mainTheme, appFonts } from '../../constants';
 
-const styles = StyleSheet.create({
+export default StyleSheet.create({
   quoteText: {
     fontFamily: appFonts.regular,
     fontSize: 22,
@@ -10,7 +10,5 @@ const styles = StyleSheet.create({
     marginTop: 0,
     marginBottom: 30,
     paddingHorizontal: 1,
-  }
+  },
 });
-
-export default styles;
