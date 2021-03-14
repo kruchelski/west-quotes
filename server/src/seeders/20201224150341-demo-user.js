@@ -11,7 +11,7 @@ module.exports = {
   async up() {
     return User.create({
       username: 'testUsername',
-      email: 'testUsername@test.com',
+      email: 'testusername@test.com',
       password: await bcrypt.hash('123456', 10),
     });
   },

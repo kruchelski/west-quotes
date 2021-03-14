@@ -1,16 +1,18 @@
 {
   "name": "west-quotes",
   "version": "1.0.0",
-  "description": "This is an application to consume the kanye.rest API and Twitter API",
+  "description": "This is an application to consume the kanye.rest API and Unsplash API",
   "main": "server.js",
   "scripts": {
     "postinstall": "node -e \"require('fs').existsSync('.env') || require('fs').copyFileSync('.env.example', '.env')\"",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
     "devStart": "nodemon server.js",
-    "devStartTest": "./auto-migrate.sh && nodemon server.js",
     "debug": "nodemon --inspect server.js",
     "migrations": "sequelize db:migrate",
-    "seeders": "sequelize db:seed:all"
+    "seeders": "sequelize db:seed:all",
+    "migrateAndStart": "echo \"Running migrations\" && sequelize db:migrate && nodemon server.js",
+    "fullStart": "echo \"Running migrations\" && sequelize db:migrate && echo \"Running seeds\" && sequelize db:seed:all && nodemon server.js"
   },
   "repository": {
     "type": "git",

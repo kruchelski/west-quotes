@@ -29,19 +29,4 @@ router.get('/quoteOld', async (req, res) => {
   }
 });
 
-router.get('/teste', async (req, res) => {
-  try {
-    const photoUrl = await api.searchPhotos('kanye west');
-
-    return res.json({ photoUrl });
-  } catch (err) {
-    if (err && err.message && err.message.includes('API')) {
-      const error = err.message.split('-');
-      res.status(parseInt(error[1])).send(error[2]);
-    } else {
-      res.status(500).send('An unexpected error happened');
-    }
-  }
-});
-
 module.exports = router;
