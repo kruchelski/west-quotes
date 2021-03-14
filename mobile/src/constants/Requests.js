@@ -48,6 +48,17 @@ export const ENDPOINTS = {
 		headers: null,
 	},
 
+	// Edits user info
+	editUser: {
+		url: '/user',
+		type: 'put',
+		body: true,
+		params: false,
+		headers: {
+			'Content-Type' : 'application/json'
+		}
+	},
+
 	// Refresh the access token
 	tokenRenewal: {
 		url: '/user/token',

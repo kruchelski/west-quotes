@@ -6,9 +6,9 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 const CustomButton = (props) => {
   const { level, type, icon } = props;
 
-  return <Button 
+  return <Button
     {...props}
-    icon={ icon ?
+    icon={icon ?
       <Icon
         name={icon}
         size={18}
@@ -16,8 +16,8 @@ const CustomButton = (props) => {
         color={customStyle.icon[type][level]}
       /> :
       null
-    } 
-    buttonStyle={customStyle[type][level]} 
+    }
+    buttonStyle={customStyle[type][level]}
     titleStyle={customStyle[type][level]}
   />
 }
@@ -28,14 +28,21 @@ const customStyle = {
       backgroundColor: mainTheme.primary,
       color: mainTheme.colorLight,
       fontFamily: appFonts.regular,
-      fontSize:16,
+      fontSize: 16,
       marginHorizontal: 10,
     },
     secondary: {
       backgroundColor: mainTheme.secondary,
       color: mainTheme.colorLight,
       fontFamily: appFonts.regular,
-      fontSize:16,
+      fontSize: 16,
+      marginHorizontal: 10,
+    },
+    secondary: {
+      backgroundColor: mainTheme.danger,
+      color: mainTheme.colorLight,
+      fontFamily: appFonts.regular,
+      fontSize: 16,
       marginHorizontal: 10,
     }
   },
@@ -44,7 +51,7 @@ const customStyle = {
       borderColor: mainTheme.primary,
       color: mainTheme.primary,
       fontFamily: appFonts.regular,
-      fontSize:16,
+      fontSize: 16,
       marginHorizontal: 10,
     },
     secondary: {
@@ -52,7 +59,15 @@ const customStyle = {
       color: mainTheme.secondary,
       fontFamily: appFonts.regular,
       fontFamily: appFonts.regular,
-      fontSize:16,
+      fontSize: 16,
+      marginHorizontal: 10,
+    },
+    danger: {
+      borderColor: mainTheme.danger,
+      color: mainTheme.danger,
+      fontFamily: appFonts.regular,
+      fontFamily: appFonts.regular,
+      fontSize: 16,
       marginHorizontal: 10,
     }
   },
@@ -60,28 +75,37 @@ const customStyle = {
     primary: {
       color: mainTheme.primary,
       fontFamily: appFonts.regular,
-      fontSize:16,
+      fontSize: 16,
       marginHorizontal: 10,
     },
     secondary: {
       color: mainTheme.secondary,
       fontFamily: appFonts.regular,
-      fontSize:16,
+      fontSize: 16,
       marginHorizontal: 10,
     },
+    danger: {
+      color: mainTheme.danger,
+      fontFamily: appFonts.regular,
+      fontSize: 16,
+      marginHorizontal: 10,
+    }
   },
   icon: {
     solid: {
       primary: mainTheme.colorLight,
-      secondary: mainTheme.colorLight
+      secondary: mainTheme.colorLight,
+      danger: mainTheme.danger
     },
     outline: {
       primary: mainTheme.primary,
-      secondary: mainTheme.secondary
+      secondary: mainTheme.secondary,
+      danger: mainTheme.danger
     },
     clear: {
       primary: mainTheme.colorLight,
-      secondary: mainTheme.colorLight
+      secondary: mainTheme.colorLight,
+      danger: mainTheme.danger
     }
   }
 }
