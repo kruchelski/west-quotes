@@ -18,5 +18,6 @@ export default StyleSheet.create({
     shadowOpacity: 1,
     shadowOffset: { width: 0, height: 5 },
     borderRadius: 6,
+    resizeMode: 'cover',
   },
 });
