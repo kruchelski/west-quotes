@@ -1,7 +1,5 @@
-'use strict';
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-
+  async up(queryInterface, Sequelize) {
     const transaction = await queryInterface.sequelize.transaction();
 
     try {
@@ -17,33 +15,32 @@ module.exports = {
             type: Sequelize.UUID,
             references: {
               model: 'users',
-              key: 'uuid'
+              key: 'uuid',
             },
             onDelete: 'CASCADE',
-            unique: 'unique_tag'
+            unique: 'unique_tag',
           },
           uuid_quote: {
             type: Sequelize.UUID,
             references: {
               model: 'quotes',
-              key: 'uuid'
+              key: 'uuid',
             },
-            unique: 'unique_tag'
+            unique: 'unique_tag',
           },
           likes: {
             type: Sequelize.INTEGER,
-          }
+          },
         },
         {
           transaction,
           uniqueKeys: {
             unique_tag: {
               customIndex: true,
-              fields: ['uuid_user', 'uuid_quote']
-            }
-          }
-        }
-      );
+              fields: ['uuid_user', 'uuid_quote'],
+            },
+          },
+        });
 
       // Add Indexes
       await queryInterface.addIndex('users_quotes', ['uuid'], { transaction });
@@ -56,10 +53,9 @@ module.exports = {
       transaction.rollback();
       throw err;
     }
-
-
   },
-  down: async (queryInterface, Sequelize) => {
+
+  async down() {
     // await queryInterface.dropTable('users_quotes');
-  }
+  },
 };

@@ -1,5 +1,3 @@
-'use strict';
-
 // Libraries
 const { Model, Sequelize } = require('sequelize');
 
@@ -11,28 +9,28 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      User.belongsToMany(models.Quote, { 
+      User.belongsToMany(models.Quote, {
         through: 'UserQuote',
-        foreignKey: 'uuid_user'
+        foreignKey: 'uuid_user',
       });
       User.hasOne(models.RefreshToken, {
         foreignKey: {
-          name: 'uuid_user'
-        }
+          name: 'uuid_user',
+        },
       });
       User.hasMany(models.UserQuote, {
         foreignKey: {
-          name: 'uuid_user'
-        }
+          name: 'uuid_user',
+        },
       });
     }
-  };
+  }
 
   User.init({
     uuid: {
       type: DataTypes.UUID,
       primaryKey: true,
-      defaultValue: Sequelize.UUIDV4
+      defaultValue: Sequelize.UUIDV4,
     },
     username: DataTypes.STRING,
     email: DataTypes.STRING,
@@ -42,10 +40,8 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'User',
     tableName: 'users',
-    timestamps: false
+    timestamps: false,
   });
-
-
 
   return User;
 };

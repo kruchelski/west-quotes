@@ -4,7 +4,7 @@ const userRouter = require('./src/routes/User');
 const quotesRouter = require('./src/routes/Quotes');
 
 app.listen(PORT, () => {
-    console.log(`App listening to port: ${PORT}`);
+  console.log(`App listening to port: ${PORT}`);
 });
 
 app.use('/', homeRouter);

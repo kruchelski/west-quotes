@@ -1,7 +1,5 @@
-'use strict';
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-
+  async up(queryInterface, Sequelize) {
     const transaction = await queryInterface.sequelize.transaction();
 
     try {
@@ -11,28 +9,27 @@ module.exports = {
           uuid: {
             type: Sequelize.UUID,
             allowNull: false,
-            primaryKey: true
+            primaryKey: true,
           },
           username: {
             type: Sequelize.STRING,
-            unique: true
+            unique: true,
           },
           email: {
             type: Sequelize.STRING,
-            unique: true
+            unique: true,
 
           },
           password: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
           },
           twitter: {
-            type: Sequelize.STRING
-          }
+            type: Sequelize.STRING,
+          },
         },
         {
-          transaction
-        }
-      );
+          transaction,
+        });
 
       // Add Indexes
       await queryInterface.addIndex('users', ['uuid'], { transaction });
@@ -44,9 +41,9 @@ module.exports = {
       await transaction.rollback();
       throw err;
     }
-
   },
-  down: async (queryInterface, Sequelize) => {
+
+  async down() {
     // await queryInterface.dropTable('Users');
-  }
+  },
 };

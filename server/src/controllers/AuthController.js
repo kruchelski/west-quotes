@@ -17,49 +17,50 @@ const TokenHelper = require('../helpers/TokenHelper');
  * @param {*} res Response object
  */
 const insertUser = async (req, res) => {
-    // Retrieve transaction object
-    const transaction = await sequelize.transaction();
+  // Retrieve transaction object
+  const transaction = await sequelize.transaction();
 
-    try {
-        // Retrieve information from the body's request
-        const { username, email, password } = req.body;
+  try {
+    // Retrieve information from the body's request
+    const { username, email, password } = req.body;
 
-        // If one of the arguments is missing throws an error
-        let missingArguments = []
-        const registerKeys = ['username', 'email', 'password'];
-        for (const key of registerKeys) {
-            if (!req.body[key]) {
-                missingArguments.push(key)
-            }
-        }
+    // If one of the arguments is missing throws an error
+    const missingArguments = [];
+    const registerKeys = ['username', 'email', 'password'];
 
-        if (missingArguments.length) {
-            throw new AuthError('Missing data to insert user', 400, missingArguments)
-        }
+    registerKeys.forEach((key) => {
+      if (!req.body[key]) {
+        missingArguments.push(key);
+      }
+    });
 
-        // Hash the password
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        // Creates user
-        const user = await User.create({
-            username,
-            email,
-            password: hashedPassword
-        }, { transaction })
-
-        // Commit
-        await transaction.commit();
-
-        // Return generated user UUID
-        res.json({ uuid: user.uuid });
-    } catch (err) {
-        // Rollback changes
-        await transaction.rollback();
-
-        const parsedError = ErrorHelper.errorDelegator(err);
-        res.status(parsedError.status).send(parsedError.message)
+    if (missingArguments.length) {
+      throw new AuthError('Missing data to insert user', 400, missingArguments);
     }
-}
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Creates user
+    const user = await User.create({
+      username,
+      email,
+      password: hashedPassword,
+    }, { transaction });
+
+    // Commit
+    await transaction.commit();
+
+    // Return generated user UUID
+    res.json({ uuid: user.uuid });
+  } catch (err) {
+    // Rollback changes
+    await transaction.rollback();
+
+    const parsedError = ErrorHelper.errorDelegator(err);
+    res.status(parsedError.status).send(parsedError.message);
+  }
+};
 
 /**
  * Verify the user's credentials
@@ -68,75 +69,76 @@ const insertUser = async (req, res) => {
  */
 const authenticateUser = async (req, res) => {
 
-    const transaction = await sequelize.transaction();
-    try {
-        // Retrieve information from the body's request
-        const { email, password } = req.body;
+  const transaction = await sequelize.transaction();
+  try {
+    // Retrieve information from the body's request
+    const { email, password } = req.body;
 
-        // If one of the arguments is missing throws an error
-        let missingArguments = []
-        const registerKeys = ['email', 'password'];
-        for (const key of registerKeys) {
-            if (!req.body[key]) {
-                missingArguments.push(key)
-            }
-        }
+    // If one of the arguments is missing throws an error
+    const missingArguments = [];
+    const registerKeys = ['email', 'password'];
 
-        if (missingArguments.length) {
-            throw new AuthError('Missing data to authenticate user', 400, missingArguments)
-        }
+    registerKeys.forEach((key) => {
+      if (!req.body[key]) {
+        missingArguments.push(key);
+      }
+    });
 
-        // Find user by email
-        let user = await User.findOne({
-            where: {
-                email
-            }
-        })
-
-        //  Verifies if the user is null then throws an error
-        if (!user) {
-            throw new AuthError('Email or password wrong', 404);
-        }
-
-        // Convert user to JSON
-        user = user.toJSON();
-
-        // Compares the password
-        const passwordOk = await bcrypt.compare(password, user.password);
-
-        if (!passwordOk) {
-            throw new AuthError('Email or password wrong', 404);
-        }
-
-        // Extract data that will be used in the jwt
-        const userToken = {
-            uuid: user.uuid,
-            username: user.username,
-            email: user.email,
-        }
-
-        // Generate Access Token
-        const accessToken = TokenHelper.generateToken(userToken, 'access');
-
-        // Generate and stores Refresh Token
-        const refreshToken = TokenHelper.generateToken(userToken, 'refresh');
-
-        await RefreshToken.create({
-            uuid_user: user.uuid,
-            token: refreshToken
-        }, { transaction });
-
-        await transaction.commit();
-
-        // Return the tokens
-        res.json({ accessToken, refreshToken, user: userToken });
-    } catch (err) {
-        await transaction.rollback();
-
-        const parsedError = ErrorHelper.errorDelegator(err);
-        res.status(parsedError.status).send(parsedError.message);
+    if (missingArguments.length) {
+      throw new AuthError('Missing data to authenticate user', 400, missingArguments);
     }
-}
+
+    // Find user by email
+    let user = await User.findOne({
+      where: {
+        email,
+      },
+    });
+
+    //  Verifies if the user is null then throws an error
+    if (!user) {
+      throw new AuthError('Email or password wrong', 404);
+    }
+
+    // Convert user to JSON
+    user = user.toJSON();
+
+    // Compares the password
+    const passwordOk = await bcrypt.compare(password, user.password);
+
+    if (!passwordOk) {
+      throw new AuthError('Email or password wrong', 404);
+    }
+
+    // Extract data that will be used in the jwt
+    const userToken = {
+      uuid: user.uuid,
+      username: user.username,
+      email: user.email,
+    };
+
+    // Generate Access Token
+    const accessToken = TokenHelper.generateToken(userToken, 'access');
+
+    // Generate and stores Refresh Token
+    const refreshToken = TokenHelper.generateToken(userToken, 'refresh');
+
+    await RefreshToken.create({
+      uuid_user: user.uuid,
+      token: refreshToken,
+    }, { transaction });
+
+    await transaction.commit();
+
+    // Return the tokens
+    res.json({ accessToken, refreshToken, user: userToken });
+  } catch (err) {
+    await transaction.rollback();
+
+    const parsedError = ErrorHelper.errorDelegator(err);
+    res.status(parsedError.status).send(parsedError.message);
+  }
+};
 
 /**
  * Logout an user of the system
@@ -144,133 +146,135 @@ const authenticateUser = async (req, res) => {
  * @param {*} res Response object
  */
 const logoutUser = async (req, res) => {
-    // Retrieve transaction object
-    const transaction = await sequelize.transaction();
+  // Retrieve transaction object
+  const transaction = await sequelize.transaction();
 
-    try {
-        // Retrieve uuid from the req params
-        const userUuid = req.params.uuid
+  try {
+    // Retrieve uuid from the req params
+    const userUuid = req.params.uuid;
 
-        // If no uuid is informed throw AuthError
-        if (!userUuid) {
-            throw new AuthError('Error trying to logout', 400, "User's uuid")
-        }
-
-        // Delete records from refresh_tokens table
-        await RefreshToken.destroy({
-            where: {
-                uuid_user: userUuid,
-            }
-        }, { transaction })
-
-        // Commit changes
-        await transaction.commit();
-
-        // Return 204
-        res.status(204).send();
-
-    } catch (err) {
-        // Rollback changes
-        await transaction.rollback();
-
-        const parsedError = ErrorHelper.errorDelegator(err);
-        res.status(parsedError.status).send(parsedError.message)
+    // If no uuid is informed throw AuthError
+    if (!userUuid) {
+      throw new AuthError('Error trying to logout', 400, "User's uuid");
     }
-}
+
+    // Delete records from refresh_tokens table
+    await RefreshToken.destroy({
+      where: {
+        uuid_user: userUuid,
+      },
+    }, { transaction });
+
+    // Commit changes
+    await transaction.commit();
+
+    // Return 204
+    res.status(204).send();
+
+  } catch (err) {
+    // Rollback changes
+    await transaction.rollback();
+
+    const parsedError = ErrorHelper.errorDelegator(err);
+    res.status(parsedError.status).send(parsedError.message);
+  }
+};
 
 /**
  * Delete an user's account
- * @param {*} req 
- * @param {*} res 
+ * @param {*} req
+ * @param {*} res
  */
 const removeUser = async (req, res) => {
-    // Retrieve transaction object
-    const transaction = await sequelize.transaction();
+  // Retrieve transaction object
+  const transaction = await sequelize.transaction();
 
-    try {
-        // Retrieve user's uuid form request
-        const userUuid = req.user.uuid;
+  try {
+    // Retrieve user's uuid form request
+    const userUuid = req.user.uuid;
 
-        // If no uuid is informed throw AuthError
-        if (!userUuid) {
-            throw new AuthError('Error trying to remove user', 400, "User's uuid")
-        }
-
-        // Delete
-        await User.destroy({
-            where: {
-                uuid: userUuid
-            }
-        }, { transaction });
-
-        // Commit changes
-        await transaction.commit();
-
-        // Return 204
-        res.status(204).send();
-    } catch {
-        // Rollback changes
-        await transaction.rollback();
-
-        const parsedError = ErrorHelper.errorDelegator(err);
-        res.status(parsedError.status).send(parsedError.message)
+    // If no uuid is informed throw AuthError
+    if (!userUuid) {
+      throw new AuthError('Error trying to remove user', 400, "User's uuid");
     }
-}
+
+    // Delete
+    await User.destroy({
+      where: {
+        uuid: userUuid,
+      },
+    }, { transaction });
+
+    // Commit changes
+    await transaction.commit();
+
+    // Return 204
+    res.status(204).send();
+  } catch {
+    // Rollback changes
+    await transaction.rollback();
+
+    const parsedError = ErrorHelper.errorDelegator(err);
+    res.status(parsedError.status).send(parsedError.message);
+  }
+};
 
 const editUser = async (req, res) => {
-    // Retrieve transaction object
-    const transaction = await sequelize.transaction();
+  // Retrieve transaction object
+  const transaction = await sequelize.transaction();
 
-    try {
-        // Retrieve the attributes from the body
-        const { username, email, password } = req.body;
+  try {
+    // Retrieve the attributes from the body
+    const { username, email, password } = req.body;
 
-        // Retrieve de UUID from the request
-        const userUuid = req.user.uuid;
+    // Retrieve de UUID from the request
+    const userUuid = req.user.uuid;
 
-        // If no uuid is informed throw AuthError
-        if (!userUuid) {
-            throw new AuthError('Error trying to edit user', 400, "User's uuid")
-        }
-
-        // Search the user in the database
-        let user = await User.findOne({
-            where: {
-                uuid : userUuid
-            }
-        }, { transaction })
-
-        //  Verifies if the user is null then throws an error
-        if (!user) {
-            throw new AuthError('User not found', 404);
-        }
-
-        // Update only the attributes that are valid
-        user.username = username ? username : user.username;
-        user.email = email ? email : user.email;
-
-        // If it's changing the password, hash the new password
-        if (password) {
-            const hashedPassword = await bcrypt.hash(password, 10);
-            user.password = hashedPassword;
-        }
-
-        // Save
-        await user.save({ transaction })
-
-        // Commit
-        await transaction.commit();
-
-        // Return 204
-        res.status(204).send();
-
-    } catch (err) {
-        // Rollback changes
-        await transaction.rollback();
-
-        const parsedError = ErrorHelper.errorDelegator(err);
-        res.status(parsedError.status).send(parsedError.message)
+    // If no uuid is informed throw AuthError
+    if (!userUuid) {
+      throw new AuthError('Error trying to edit user', 400, "User's uuid");
     }
-}
 
-module.exports = { insertUser, authenticateUser, logoutUser, removeUser, editUser };
+    // Search the user in the database
+    const user = await User.findOne({
+      where: {
+        uuid: userUuid,
+      },
+    }, { transaction });
+
+    //  Verifies if the user is null then throws an error
+    if (!user) {
+      throw new AuthError('User not found', 404);
+    }
+
+    // Update only the attributes that are valid
+    user.username = username || user.username;
+    user.email = email || user.email;
+
+    // If it's changing the password, hash the new password
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      user.password = hashedPassword;
+    }
+
+    // Save
+    await user.save({ transaction });
+
+    // Commit
+    await transaction.commit();
+
+    // Return 204
+    res.status(204).send();
+
+  } catch (err) {
+    // Rollback changes
+    await transaction.rollback();
+
+    const parsedError = ErrorHelper.errorDelegator(err);
+    res.status(parsedError.status).send(parsedError.message);
+  }
+};
+
+module.exports = {
+  insertUser, authenticateUser, logoutUser, removeUser, editUser,
+};

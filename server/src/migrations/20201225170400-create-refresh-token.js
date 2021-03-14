@@ -1,7 +1,5 @@
-'use strict';
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-
+  async up(queryInterface, Sequelize) {
     const transaction = await queryInterface.sequelize.transaction();
 
     try {
@@ -12,7 +10,7 @@ module.exports = {
             type: Sequelize.UUID,
             references: {
               model: 'users',
-              key: 'uuid'
+              key: 'uuid',
             },
             onDelete: 'CASCADE',
             allowNull: false,
@@ -28,12 +26,11 @@ module.exports = {
             type: Sequelize.DATE,
             defaultValue: Sequelize.NOW,
             allowNull: false,
-          }
+          },
         },
         {
-          transaction
-        }
-      );
+          transaction,
+        });
 
       // Add Indexes
       // Add Indexes
@@ -46,9 +43,9 @@ module.exports = {
       await transaction.rollback();
       throw err;
     }
-
   },
-  down: async (queryInterface, Sequelize) => {
+
+  async down() {
     // await queryInterface.dropTable('refresh_tokens');
-  }
+  },
 };

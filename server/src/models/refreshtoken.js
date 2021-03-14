@@ -1,5 +1,3 @@
-'use strict';
-
 // Libraries
 const { Model, Sequelize } = require('sequelize');
 
@@ -16,10 +14,10 @@ module.exports = (sequelize, DataTypes) => {
           name: 'uuid_user',
           allowNull: false,
         },
-        onDelete: 'cascade'
-      })
+        onDelete: 'cascade',
+      });
     }
-  };
+  }
   RefreshToken.init({
     uuid_user: {
       type: DataTypes.UUID,
@@ -27,8 +25,8 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       references: {
         model: 'User',
-        key: 'uuid'
-      }
+        key: 'uuid',
+      },
     },
     token: {
       type: DataTypes.TEXT,
@@ -44,7 +42,8 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'RefreshToken',
     tableName: 'refresh_tokens',
-    timestamps: false
+    timestamps: false,
   });
+
   return RefreshToken;
 };

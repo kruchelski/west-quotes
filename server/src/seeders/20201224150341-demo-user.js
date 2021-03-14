@@ -12,16 +12,16 @@ module.exports = {
     return User.create({
       username: 'testUsername',
       email: 'testUsername@test.com',
-      password: await bcrypt.hash('123456', 10)
-    })
+      password: await bcrypt.hash('123456', 10),
+    });
   },
 
-  down() {
+  async down() {
     /**
      * Add commands to revert seed here.
      *
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-  }
+  },
 };

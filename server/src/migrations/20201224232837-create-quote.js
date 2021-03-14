@@ -1,7 +1,5 @@
-'use strict';
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-
+  async up(queryInterface, Sequelize) {
     const transaction = await queryInterface.sequelize.transaction();
 
     try {
@@ -18,16 +16,15 @@ module.exports = {
             unique: true,
           },
           occurrences: {
-            type: Sequelize.INTEGER
+            type: Sequelize.INTEGER,
           },
           likes: {
-            type: Sequelize.INTEGER
-          }
+            type: Sequelize.INTEGER,
+          },
         },
         {
-          transaction
-        }
-      );
+          transaction,
+        });
 
       // Add Indexes
       await queryInterface.addIndex('quotes', ['uuid'], { transaction });
@@ -40,7 +37,8 @@ module.exports = {
       throw err;
     }
   },
-  down: async (queryInterface, Sequelize) => {
+
+  async down() {
     // await queryInterface.dropTable('quotes');
-  }
+  },
 };
