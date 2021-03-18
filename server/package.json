@@ -1,34 +1,22 @@
 {
   "name": "west-quotes",
   "version": "1.0.0",
-  "description": "This is an application to consume the kanye.rest API and Unsplash API",
+  "private": true,
+  "license": "MIT",
+  "authors": [
+    "Cassiano Kruchelski",
+    "Julio L. Muller"
+  ],
   "main": "server.js",
   "scripts": {
     "postinstall": "node -e \"require('fs').existsSync('.env') || require('fs').copyFileSync('.env.example', '.env')\"",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "devStart": "nodemon server.js",
+    "dev": "nodemon server.js",
+    "devStart": "npm run dev",
     "debug": "nodemon --inspect server.js",
-    "migrations": "sequelize db:migrate",
-    "seeders": "sequelize db:seed:all",
-    "migrateAndStart": "echo \"Running migrations\" && sequelize db:migrate && nodemon server.js",
-    "fullStart": "echo \"Running migrations\" && sequelize db:migrate && echo \"Running seeds\" && sequelize db:seed:all && nodemon server.js"
+    "migrate": "sequelize db:migrate",
+    "seed": "sequelize db:seed:all"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kruchelski/west-quotes.git"
-  },
-  "keywords": [
-    "kanye",
-    "rest",
-    "quotes"
-  ],
-  "author": "Cassiano Kruchelski",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/kruchelski/west-quotes/issues"
-  },
-  "homepage": "https://github.com/kruchelski/west-quotes#readme",
   "dependencies": {
     "axios": "~0.21.1",
     "bcrypt": "^5.0.1",
