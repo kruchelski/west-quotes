@@ -13,7 +13,7 @@ export default {
     slug: project.name,
     version: project.version,
     orientation: 'portrait',
-    icon: './assets/icon.png',
+    icon: './src/assets/images/icon.png',
     splash: {
       backgroundColor: '#ffffff',
       image: './src/assets/images/logo.png',
@@ -33,12 +33,12 @@ export default {
     },
     android: {
       adaptiveIcon: {
-        foregroundImage: './assets/adaptive-icon.png',
+        foregroundImage: './src/assets/images/adaptive-icon.png',
         backgroundColor: '#ffffff',
       },
     },
     web: {
-      favicon: './assets/favicon.png',
+      favicon: './src/assets/images/favicon.png',
     },
   },
-}
+};
