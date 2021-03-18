@@ -7,7 +7,7 @@
     "Cassiano Kruchelski",
     "Julio L. Muller"
   ],
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "src/main.js",
   "scripts": {
     "postinstall": "node -e \"require('fs').existsSync('.env') || require('fs').copyFileSync('.env.example', '.env')\"",
     "start": "expo start",

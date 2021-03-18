@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import Navigators from './src/navigators';
-import { AuthProvider } from './src/contexts';
+import Navigators from './navigators';
+import { AuthProvider } from './contexts';
 import * as PTSansFonts from '@expo-google-fonts/pt-sans';
 import * as NunitoFonts from '@expo-google-fonts/nunito';
 
