@@ -70,14 +70,14 @@ Although there are several libraries involved in this application, here will be 
 As mentioned before, it's required to have Node with version 12 or above and NPM in command line. For the mobile part it's required to have the [Expo CLI](https://docs.expo.io/workflow/expo-cli/).
 
 To run nice and soft it's needed three things:
-- Have a database running and listening at some port   
+- Have a database running and listening at some port
 - Start the server (backend)
 - Start the mobile app
 
 #### Firts things first: The application directory structure!
 As you can see, this application has two main folders:
-- mobile   
-- server   
+- mobile
+- server
 
 It's recommended to have two terminal open, each one handling one of the two main parts of the application (one for the mobile and the other for the server). This means that the root folder for the mobile is inside the mobile folder and (as you probably guessed) the root folder for the server is in the server folder. So, for example, the ```.env``` file for the mobile application must be inside in ```./mobile/``` folder and the ```.env``` file for the server is placed in ```./server/``` folder.
 
@@ -93,13 +93,13 @@ It's recommended to have two terminal open, each one handling one of the two mai
 - Install the dependencies of the application by running ```npm install```.
 - An super important thing: To consume data from the [Unsplash API](https://unsplash.com/developers) you need to create an account as a developer to get the **API KEY**.
 - After all the setup, ou need to run the **migrations** to create the tables and, if you want, run the **seeders** to fill some data. Also you will have to decide if you want to start the server with [nodemon](https://nodemon.io/) or not (Nodemon simply monitors the server for any changes and, if it detects, will automatically restart the server). To do all these things, there are some sweet scripts in the ```package.json``` file and you can run it by entering the command ```npm run <script name>```. The main scripts are:
-   
+
 - ```start``` - Just runs the application
 - ```devStart``` - Runs the application with nodemon
 - ```migrations``` - Just runs the migrations
 - ```seeders``` - Only runs the seeds files
 - ```migrateAndStart``` - Runs the migrations and starts the server with nodemon
-- ```fullStart``` - Runs migrations, seeders and then starts the server with nodemon   
+- ```fullStart``` - Runs migrations, seeders and then starts the server with nodemon
 
 So here's an example of how to install the dependencies and run the application with nodemon and with the migrations:
 
@@ -236,34 +236,34 @@ Here are some samples of the application in use
 
 Fig 1 - Splash screen and Register screen
 
-![Splash Register screen](./images/01-splash-register-screen.gif)
+![Splash Register screen](./.github/01-splash-register-screen.gif)
 
 Fig 2 - Creating a new account
 
-![New account](./images/02-new-user.gif)
+![New account](./.github/02-new-user.gif)
 
 Fig 3 - Showing a quote and liking it
 
-![Quote and like](./images/03-new-quote-like.gif)
+![Quote and like](./.github/03-new-quote-like.gif)
 
 Fig 4 - User's stuff
 
-![User's stuff](./images/04-my-stuff.gif)
+![User's stuff](./.github/04-my-stuff.gif)
 
 Fig 5 - Showing a quote detail and disliking the quote
 
-![Quote's detail dislike](./images/05-quote-detail-dislike.gif)
+![Quote's detail dislike](./.github/05-quote-detail-dislike.gif)
 
 Fig 6 - Editing user's data
 
-![Editing user](./images/06-edit-user.gif)   
+![Editing user](./.github/06-edit-user.gif)
 
 Fig 7 - Logout
 
-![Logout](./images/07-logout.gif)
+![Logout](./.github/07-logout.gif)
 
 Fig 8 - Deleting account
 
-![Account delete](./images/08-delete-account.gif)
+![Account delete](./.github/08-delete-account.gif)
 
 </div>
