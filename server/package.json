@@ -30,24 +30,22 @@
   },
   "homepage": "https://github.com/kruchelski/west-quotes#readme",
   "dependencies": {
-    "axios": "^0.21.0",
-    "bcrypt": "^5.0.0",
-    "dotenv": "^8.2.0",
+    "axios": "~0.21.1",
+    "bcrypt": "^5.0.1",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "jsonwebtoken": "^8.5.1",
-    "passport": "^0.4.1",
-    "passport-twitter": "^1.0.4",
     "pg": "^8.5.1",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.3.5",
-    "twitter": "^1.7.1",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@lacussoft/eslint-config": "^1.0.1",
+    "dotenv": "^8.2.0",
     "eslint": "^7.22.0",
     "nodemon": "^2.0.6",
-    "sequelize-cli": "^6.2.0"
+    "sequelize-cli": "^6.2.0",
+    "sucrase": "^3.17.1"
   }
 }
